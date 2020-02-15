@@ -1,17 +1,12 @@
 from tkinter import *
 from tkinter import ttk
+from MapCanvas import *
 
 class FrameGUI(Frame):
     WINDOW_TITLE = "1008 Project"
     WINDOW_MIN_WIDTH = 700
     WINDOW_MIN_HEIGHT = 300
     ICON_PATH = "images/sit_icon.ico"
-
-    NODE_SIZE = 10
-    MAP_BOUNDS_X = (103.886964, 103.931048)
-    MAP_BOUNDS_Y = (1.385900, 1.421450)
-    MAP_SIZE_X = 500 #size of the rendered map image, TEMPORARY
-    MAP_SIZE_Y = 500
 
     def __init__(self, master, application):
         self.application = application
@@ -39,14 +34,17 @@ class FrameGUI(Frame):
         s.configure('TNotebook.Tab', font = ('Calibri', 10, 'bold'))
 
         "----------------------------------------------------------------------------------------------------------"
-        #Map controls frame
+        #Map tab
         self.map_tab = Frame(self.tab_control)
         self.map_tab.grid(row = 0, column = 0, sticky = "w")
-        self.map_tab.grid_rowconfigure(0, minsize = 10)
         self.tab_control.add(self.map_tab, text = "Tab 01")
 
-        self.map_control_frame = LabelFrame(self.map_tab, text = "Map controls", font = ('Calibri', 9, 'bold'), width = 800)
-        self.map_control_frame.grid(row = 0, column = 0, sticky = "nw", padx = 10)
+        #Left side panel
+        self.left_panel_frame = Frame(self.map_tab)
+        self.left_panel_frame.grid(row = 0, column = 0, sticky = "nsew", padx = 10)
+
+        self.map_control_frame = LabelFrame(self.left_panel_frame, text = "Map controls", font = ('Calibri', 9, 'bold'), width = 800)
+        self.map_control_frame.grid(row = 0, column = 0, sticky = "nws", padx = 10)
         self.map_control_frame.grid_rowconfigure(0, minsize=5) #For padding at the top
         self.map_control_frame.grid_columnconfigure(0, minsize=255) #For padding at the top
 
@@ -75,67 +73,40 @@ class FrameGUI(Frame):
         self.end_point_list.insert(END, "hdb 1")
 
         "----------------------------------------------------------------------------------------------------------"
+        #Map options
+        self.map_options_frame = LabelFrame(self.left_panel_frame, text = "Map options", font = ('Calibri', 9, 'bold'), width = 800)
+        self.map_options_frame.grid(row = 1, column = 0, sticky = "n", padx = 10)
+        self.map_options_frame.grid_rowconfigure(0, minsize=5) #For padding at the top
+        self.map_options_frame.grid_columnconfigure(0, minsize=255) #For padding at the top
+
+        #Start point selection GUI
+        self.checkbox_lrt_val = IntVar()
+        self.checkbox_lrt = Checkbutton(self.map_options_frame, text = "Show LRT nodes", variable = self.checkbox_lrt_val, command = self.show_lrt_nodes)
+        self.checkbox_lrt.grid(row = 0, column = 0, sticky = "w")
+        self.checkbox_lrt.select()
+        self.checkbox_mrt_val = IntVar()
+        self.checkbox_mrt = Checkbutton(self.map_options_frame, text = "Show MRT nodes", variable = self.checkbox_mrt_val, command = self.show_mrt_nodes)
+        self.checkbox_mrt.grid(row = 1, column = 0, sticky = "w")
+        self.checkbox_mrt.select()
+        self.checkbox_bus_val = IntVar()
+        self.checkbox_bus = Checkbutton(self.map_options_frame, text = "Show bus nodes", variable = self.checkbox_bus_val, command = self.show_bus_nodes)
+        self.checkbox_bus.grid(row = 2, column = 0, sticky = "w")
+        self.checkbox_bus.select()
+        self.checkbox_hdb_val = IntVar()
+        self.checkbox_hdb = Checkbutton(self.map_options_frame, text = "Show HDB nodes", variable = self.checkbox_hdb_val, command = self.show_hdb_nodes)
+        self.checkbox_hdb.grid(row = 3, column = 0, sticky = "w")
+        self.checkbox_hdb.select()
+
+        "----------------------------------------------------------------------------------------------------------"
         #Map canvas
-        self.map_canvas = Canvas(self.map_tab, width=400, height=300, background="#00ffff")
+        self.map_canvas = MapCanvas(self.map_tab, self.application, 800, 500)
         self.map_canvas.grid(row = 0, column = 1, sticky = "w")
-        self.map_canvas.bind("<ButtonPress-1>", self.move_start)
-        self.map_canvas.bind("<B1-Motion>", self.move_move)
 
-        #TEMPORARY
-        self.img = PhotoImage(file="images/p2.png")
-        self.map_canvas.create_image(self.img.width() * 0.5, self.img.height() * -0.5, image=self.img)
-        FrameGUI.MAP_SIZE_X = self.img.width()
-        FrameGUI.MAP_SIZE_Y = self.img.height()
-        self.map_canvas.scan_dragto(0, 400, gain=1)
-        #self.map_canvas.create_rectangle(0, 0, 10, 10, fill="blue")
-
-        self.create_all_map_icons()
-        self.draw_all_map_icons()
-
-    def move_start(self, event):
-        """Sets the start point of the map canvas move
-
-        Parameters:
-        event (?):    The mouse click event
-        """
-        self.map_canvas.scan_mark(event.x, event.y)
-    def move_move(self, event):
-        """Moves the map canvas view to the position the mouse is dragged to
-
-        Parameters:
-        event (?):    The mouse click event
-        """
-        self.map_canvas.scan_dragto(event.x, event.y, gain=1)
-
-    def create_all_map_icons(self):
-        for item in self.application.lrt_nodes:
-            render_x, render_y = self.get_icon_render_pos(item.position.x, item.position.y)
-            print(item.node_name)
-            print(render_x)
-            print(render_y)
-            item.map_icon = self.map_canvas.create_rectangle(render_x, render_y, render_x + FrameGUI.NODE_SIZE, render_y + FrameGUI.NODE_SIZE, fill="blue")
-
-    def draw_all_map_icons(self):
-        self.draw_hdb_icons()
-        self.draw_mrt_icons()
-        self.draw_lrt_icons()
-        self.draw_bus_icons()
-
-    def draw_hdb_icons(self, viewable = True):
-        pass
-
-    def draw_mrt_icons(self, viewable = True):
-        pass
-
-    def draw_lrt_icons(self, viewable = True):
-        pass
-
-    def draw_bus_icons(self, viewable = True):
-        pass
-
-    def get_icon_render_pos(self, x, y):
-        render_x = (x - FrameGUI.MAP_BOUNDS_X[0]) / (FrameGUI.MAP_BOUNDS_X[1] - FrameGUI.MAP_BOUNDS_X[0])
-        render_y = (y - FrameGUI.MAP_BOUNDS_Y[0]) / (FrameGUI.MAP_BOUNDS_Y[1] - FrameGUI.MAP_BOUNDS_Y[0])
-        render_x = render_x * FrameGUI.MAP_SIZE_X
-        render_y = render_y * FrameGUI.MAP_SIZE_Y
-        return render_x, -render_y
+    def show_lrt_nodes(self):
+        self.map_canvas.set_icon_visibility(self.checkbox_lrt_val.get(), "lrt")
+    def show_mrt_nodes(self):
+        self.map_canvas.set_icon_visibility(self.checkbox_mrt_val.get(), "mrt")
+    def show_hdb_nodes(self):
+        self.map_canvas.set_icon_visibility(self.checkbox_hdb_val.get(), "hdb")
+    def show_bus_nodes(self):
+        self.map_canvas.set_icon_visibility(self.checkbox_bus_val.get(), "bus")
