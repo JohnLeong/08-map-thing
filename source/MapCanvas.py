@@ -54,16 +54,16 @@ class MapCanvas(Canvas):
 
     def create_all_map_icons(self):
         for item in self.application.lrt_nodes:
-            render_x, render_y = self.get_icon_render_pos(item.position.x, item.position.y)
+            render_x, render_y = self.get_icon_render_pos(item.position.longitude, item.position.lattitude)
             item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_LRT)
         for item in self.application.mrt_nodes:
-            render_x, render_y = self.get_icon_render_pos(item.position.x, item.position.y)
+            render_x, render_y = self.get_icon_render_pos(item.position.longitude, item.position.lattitude)
             item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_MRT)
         for item in self.application.bus_stop_nodes:
-            render_x, render_y = self.get_icon_render_pos(item.position.x, item.position.y)
+            render_x, render_y = self.get_icon_render_pos(item.position.longitude, item.position.lattitude)
             item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_BUS)
         for item in self.application.hdb_nodes:
-            render_x, render_y = self.get_icon_render_pos(item.position.x, item.position.y)
+            render_x, render_y = self.get_icon_render_pos(item.position.longitude, item.position.lattitude)
             item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_HDB)
 
     def set_icon_visibility(self, viewable = True, target = "all"):
