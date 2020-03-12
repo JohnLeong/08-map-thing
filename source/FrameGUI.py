@@ -83,6 +83,7 @@ class FrameGUI(Frame):
         self.end_point_list = Listbox(self.map_control_frame, width = 25, height = 5, font = ('Calibri', 9))
         self.end_point_list.grid(row = 6, column = 0, sticky="we", padx = 10)
         #TEMPORARY
+        """
         self.start_point_list.insert(END, "----------LRT----------")
         for i in range(0, len(self.lrtstop)):
             self.start_point_list.insert(END, self.lrtstop[i])
@@ -91,7 +92,7 @@ class FrameGUI(Frame):
             self.start_point_list.insert(END, self.busstop[i])
         self.start_point_list.insert(END, "----------HDB----------")
         for i in range(0, len(self.hdb)):
-            self.start_point_list.insert(END, self.hdb[i])
+            self.start_point_list.insert(END, self.hdb[i])"""
 
 
         "----------------------------------------------------------------------------------------------------------"
@@ -119,10 +120,23 @@ class FrameGUI(Frame):
         self.checkbox_hdb.grid(row = 3, column = 0, sticky = "w")
         self.checkbox_hdb.select()
 
+        #TEMP
+        self.test_button = Button(self.map_options_frame, text = "TEST PATH DISPLAY", command = self.create_test_path)
+        self.test_button.grid(row = 4, column = 0, sticky = "w")
+
         "----------------------------------------------------------------------------------------------------------"
         #Map canvas
         self.map_canvas = MapCanvas(self.map_tab, self.application, 800, 500)
         self.map_canvas.grid(row = 0, column = 1, sticky = "w")
+    #TEMP TO REMOVE
+    def create_test_path(self):
+        path = []
+        for i in range(10):
+            path.append(self.application.all_nodes[i])
+        self.display_path(path)
+
+    def display_path(self, path):
+        self.map_canvas.display_path(path)
 
     def show_lrt_nodes(self):
         self.map_canvas.set_icon_visibility(self.checkbox_lrt_val.get(), "lrt")

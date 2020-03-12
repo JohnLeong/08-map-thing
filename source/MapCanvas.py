@@ -19,6 +19,7 @@ class MapCanvas(Canvas):
         self.canvas_size_x = size_x
         self.canvas_size_y = size_y
         self.application = application
+        self.path_lines = []
         self.create_map()
 
     def create_map(self):
@@ -92,3 +93,21 @@ class MapCanvas(Canvas):
         render_x = render_x * MapCanvas.MAP_SIZE_X
         render_y = render_y * MapCanvas.MAP_SIZE_Y
         return render_x, -render_y
+
+    def display_path(self, path: list):
+        """Displays a path on the map
+
+        Parameters:
+        path:    A list of mapnodes which form the path
+        """
+        self.path_lines = []
+        self.path_lines.append(super().create_line(0, 0, 100, -100, fill="red", width = 10))
+        self.set_icon_visibility(viewable = False, target = "all")
+        for i in range(len(path)):
+            super().itemconfigure(path[i].map_icon, state = 'normal')
+        for i in range(len(path) - 1):
+            start_x, start_y = self.get_icon_render_pos(path[i].position.longitude, path[i].position.lattitude)
+            end_x, end_y = self.get_icon_render_pos(path[i + 1].position.longitude, path[i + 1].position.lattitude)
+            print(start_x)
+            print(start_y)
+            self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="red", width = 1))

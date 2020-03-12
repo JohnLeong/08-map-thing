@@ -5,7 +5,6 @@ import fiona  # ; help(fiona.open)
 from FrameGUI import *
 from MapNode import *
 
-
 class Application():
 
     def __init__(self):
@@ -27,23 +26,30 @@ class Application():
     ## TODO:Load map data from text files into the varius node lists
     def load_map_data(self):
         # import hdb
+        """ #TEMP comment out first because very slow
         hdb = geopandas.read_file("map/new_hdb.geojson")
         for i in range(0, len(hdb)):
-            self.hdb_nodes.append(MapNode(hdb.name, "hdb", hdb.geometry.y[i], hdb.geometry.x[i]))
-          #  print(hdb.name[i], hdb.geometry.y[i], hdb.geometry.x[i], "loaded")
-
+            new_node = MapNode(hdb.name, "hdb", hdb.geometry.y[i], hdb.geometry.x[i])
+            self.hdb_nodes.append(new_node)
+            self.all_nodes.append(new_node)
+            print(hdb.name[i], hdb.geometry.y[i], hdb.geometry.x[i], "loaded")
+            """
         # import bus_stop
         bus = geopandas.read_file("map/new_bus.geojson")
 
         for i in range(0, len(bus)):
-            self.bus_stop_nodes.append(MapNode(bus.name[i], "bus", bus.geometry.y[i], bus.geometry.x[i]))
-        #    print(bus.name[i], bus.geometry.y[i], bus.geometry.x[i], "loaded")
+            new_node = MapNode(bus.name[i], "bus", bus.geometry.y[i], bus.geometry.x[i])
+            self.bus_stop_nodes.append(new_node)
+            self.all_nodes.append(new_node)
+            print(bus.name[i], bus.geometry.y[i], bus.geometry.x[i], "loaded")
 
         # import lrt
         lrt = geopandas.read_file("map/new_lrt.geojson")
 
         for i in range(0, len(lrt)):
-            self.lrt_nodes.append(MapNode(lrt.name[i], "lrt", lrt.geometry.y[i], lrt.geometry.x[i]))
+            new_node = MapNode(lrt.name[i], "lrt", lrt.geometry.y[i], lrt.geometry.x[i])
+            self.lrt_nodes.append(new_node)
+            self.all_nodes.append(new_node)
             print(lrt.name[i], lrt.geometry.x[i], lrt.geometry.y[i], "loaded")
 
     ## TODO: found on youtube, need modify, need find map link using dictonary https://www.youtube.com/watch?v=Ub4-nG09PFw
