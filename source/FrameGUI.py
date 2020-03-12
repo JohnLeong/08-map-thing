@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 from MapCanvas import *
+import Application as app
+
 
 class FrameGUI(Frame):
     WINDOW_TITLE = "1008 Project"
@@ -25,6 +27,13 @@ class FrameGUI(Frame):
         """ Creates all the GUI to be rendered onto the program window
             Add new GUI elements here
         """
+        self.lrtstop = []
+        self.lrtstop = app.get_lrt()
+        self.busstop = []
+        self.busstop = app.get_busstop()
+        self.hdb = []
+        self.hdb = app.get_hdb()
+
         #Tab controls
         self.tab_control = ttk.Notebook(self)
         self.tab_control.grid(row = 0, column = 0, sticky = "w")
@@ -56,9 +65,15 @@ class FrameGUI(Frame):
         self.start_point_list = Listbox(self.map_control_frame, width = 25, height = 5, font = ('Calibri', 9))
         self.start_point_list.grid(row = 3, column = 0, sticky="we", padx = 10)
         #TEMPORARY
-        self.start_point_list.insert(END, "bus stop 1")
-        self.start_point_list.insert(END, "mrt 1")
-        self.start_point_list.insert(END, "hdb 1")
+        self.start_point_list.insert(END, "----------LRT----------")
+        for i in range(0, len(self.lrtstop)):
+            self.start_point_list.insert(END, self.lrtstop[i])
+        self.start_point_list.insert(END, "----------BUS----------")
+        for i in range(0, len(self.busstop)):
+            self.start_point_list.insert(END, self.busstop[i])
+        self.start_point_list.insert(END, "----------HDB----------")
+        for i in range(0, len(self.hdb)):
+            self.start_point_list.insert(END, self.hdb[i])
 
         #End point selection GUI
         self.end_point_label = Label(self.map_control_frame, text = "Select ending point", font = ('Calibri', 9))
@@ -68,9 +83,16 @@ class FrameGUI(Frame):
         self.end_point_list = Listbox(self.map_control_frame, width = 25, height = 5, font = ('Calibri', 9))
         self.end_point_list.grid(row = 6, column = 0, sticky="we", padx = 10)
         #TEMPORARY
-        self.end_point_list.insert(END, "bus stop 1")
-        self.end_point_list.insert(END, "mrt 1")
-        self.end_point_list.insert(END, "hdb 1")
+        self.start_point_list.insert(END, "----------LRT----------")
+        for i in range(0, len(self.lrtstop)):
+            self.start_point_list.insert(END, self.lrtstop[i])
+        self.start_point_list.insert(END, "----------BUS----------")
+        for i in range(0, len(self.busstop)):
+            self.start_point_list.insert(END, self.busstop[i])
+        self.start_point_list.insert(END, "----------HDB----------")
+        for i in range(0, len(self.hdb)):
+            self.start_point_list.insert(END, self.hdb[i])
+
 
         "----------------------------------------------------------------------------------------------------------"
         #Map options

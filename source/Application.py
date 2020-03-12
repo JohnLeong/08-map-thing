@@ -15,6 +15,9 @@ class Application():
         self.mrt_nodes = []
         self.hdb_nodes = []
         self.all_nodes = []
+        self.hdbnames = []
+        self.busnames = []
+        self.lrtnames = []
         self.load_map_data()
 
         # Initialise GUI
@@ -24,20 +27,20 @@ class Application():
     ## TODO:Load map data from text files into the varius node lists
     def load_map_data(self):
         # import hdb
-        hdb = geopandas.read_file("map/hdb.geojson")
+        hdb = geopandas.read_file("map/new_hdb.geojson")
         for i in range(0, len(hdb)):
             self.hdb_nodes.append(MapNode(hdb.name, "hdb", hdb.geometry.y[i], hdb.geometry.x[i]))
-            print(hdb.name[i], hdb.geometry.y[i], hdb.geometry.x[i], "loaded")
+          #  print(hdb.name[i], hdb.geometry.y[i], hdb.geometry.x[i], "loaded")
 
         # import bus_stop
-        bus = geopandas.read_file("map/bus_stop.geojson")
+        bus = geopandas.read_file("map/new_bus.geojson")
 
         for i in range(0, len(bus)):
             self.bus_stop_nodes.append(MapNode(bus.name[i], "bus", bus.geometry.y[i], bus.geometry.x[i]))
-            print(bus.name[i], bus.geometry.y[i], bus.geometry.x[i], "loaded")
+        #    print(bus.name[i], bus.geometry.y[i], bus.geometry.x[i], "loaded")
 
         # import lrt
-        lrt = geopandas.read_file("map/lrt.geojson")
+        lrt = geopandas.read_file("map/new_lrt.geojson")
 
         for i in range(0, len(lrt)):
             self.lrt_nodes.append(MapNode(lrt.name[i], "lrt", lrt.geometry.y[i], lrt.geometry.x[i]))
@@ -103,3 +106,27 @@ class Application():
             print('And the path is ' + str(track_path))
 
     dijkstra(map, 'a', 'h')
+
+
+def get_lrt():
+    lrtnames = []
+    lrt = geopandas.read_file("map/new_lrt.geojson")
+
+    for i in range(0, len(lrt)):
+        lrtnames.append(lrt.name[i])
+    return lrtnames
+
+def get_busstop():
+    busnames = []
+    bus = geopandas.read_file("map/new_bus.geojson")
+
+    for i in range(0, len(bus)):
+        busnames.append(bus.name[i])
+    return busnames
+def get_hdb():
+    block = []
+    hdb = geopandas.read_file("map/new_hdb.geojson")
+
+    for i in range(0, len(hdb)):
+        block.append(hdb.name[i])
+    return block
