@@ -101,7 +101,6 @@ class MapCanvas(Canvas):
         path:    A list of mapnodes which form the path
         """
         self.path_lines = []
-        self.path_lines.append(super().create_line(0, 0, 100, -100, fill="red", width = 10))
         self.set_icon_visibility(viewable = False, target = "all")
         for i in range(len(path)):
             super().itemconfigure(path[i].map_icon, state = 'normal')
