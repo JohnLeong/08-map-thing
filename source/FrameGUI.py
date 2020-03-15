@@ -12,6 +12,7 @@ class FrameGUI(Frame):
 
     def __init__(self, master, application):
         self.application = application
+        self.selected_node = None
         self.create_window(master)
         self.create_gui()
 
@@ -60,10 +61,12 @@ class FrameGUI(Frame):
         #Start point selection GUI
         self.start_point_label = Label(self.map_control_frame, text = "Select starting point", font = ('Calibri', 9))
         self.start_point_label.grid(row = 1, column = 0, sticky = "w", padx = 10)
-        self.start_point_entry = Entry(self.map_control_frame)
+        self.start_point_entry_text = StringVar()
+        self.start_point_entry = Entry(self.map_control_frame, textvariable=self.start_point_entry_text)
         self.start_point_entry.grid(row = 2, column = 0, sticky="we", padx = 10)
         self.start_point_list = Listbox(self.map_control_frame, width = 25, height = 5, font = ('Calibri', 9))
         self.start_point_list.grid(row = 3, column = 0, sticky="we", padx = 10)
+
         #TEMPORARY
         self.start_point_list.insert(END, "----------LRT----------")
         for i in range(0, len(self.lrtstop)):
@@ -78,7 +81,8 @@ class FrameGUI(Frame):
         #End point selection GUI
         self.end_point_label = Label(self.map_control_frame, text = "Select ending point", font = ('Calibri', 9))
         self.end_point_label.grid(row = 4, column = 0, sticky = "w", padx = 10)
-        self.end_point_entry = Entry(self.map_control_frame)
+        self.end_point_entry_text = StringVar()
+        self.end_point_entry = Entry(self.map_control_frame, textvariable=self.end_point_entry_text)
         self.end_point_entry.grid(row = 5, column = 0, sticky="we", padx = 10)
         self.end_point_list = Listbox(self.map_control_frame, width = 25, height = 5, font = ('Calibri', 9))
         self.end_point_list.grid(row = 6, column = 0, sticky="we", padx = 10)
@@ -94,39 +98,60 @@ class FrameGUI(Frame):
         for i in range(0, len(self.hdb)):
             self.start_point_list.insert(END, self.hdb[i])"""
 
+        self.map_control_frame.grid_rowconfigure(7, minsize=10)
+        self.find_path_button = Button(self.map_control_frame, text = "Find path", command = self.application.find_path)
+        self.find_path_button.grid(row = 8, column = 0, sticky="we", padx = 10)
+
+        "----------------------------------------------------------------------------------------------------------"
+        #Node info
+        self.node_info_frame = LabelFrame(self.left_panel_frame, text = "Node info", font = ('Calibri', 9, 'bold'))
+        self.node_info_frame.grid(row = 1, column = 0, sticky = "n", padx = 10)
+        self.node_info_frame.grid_rowconfigure(0, minsize=5) #For padding at the top
+        self.node_info_frame.grid_columnconfigure(0, minsize=255) #For padding at the top
+
+        self.node_info_name = Label(self.node_info_frame, text = "Name: ", font = ('Calibri', 9))
+        self.node_info_name.grid(row = 0, column = 0, sticky = "w", padx = 10)
+        self.node_info_type = Label(self.node_info_frame, text = "Type: ", font = ('Calibri', 9))
+        self.node_info_type.grid(row = 1, column = 0, sticky = "w", padx = 10)
+        self.node_info_lat = Label(self.node_info_frame, text = "Lattitude: ", font = ('Calibri', 9))
+        self.node_info_lat.grid(row = 2, column = 0, sticky = "w", padx = 10)
+        self.node_info_long = Label(self.node_info_frame, text = "Longitude: ", font = ('Calibri', 9))
+        self.node_info_long.grid(row = 3, column = 0, sticky = "w", padx = 10)
+
+        self.node_info_button_frame = Frame(self.node_info_frame)
+        self.node_info_button_frame.grid(row = 4, column = 0, sticky="we", padx = 5)
+        self.node_info_start_button = Button(self.node_info_button_frame, text = "Set start", command = self.set_start_node)
+        self.node_info_start_button.grid(row = 0, column = 0, sticky="we", padx = 5)
+        self.node_info_end_button = Button(self.node_info_button_frame, text = "Set end", command = self.set_end_node)
+        self.node_info_end_button.grid(row = 0, column = 1, sticky="we", padx = 5)
 
         "----------------------------------------------------------------------------------------------------------"
         #Map options
         self.map_options_frame = LabelFrame(self.left_panel_frame, text = "Map options", font = ('Calibri', 9, 'bold'), width = 800)
-        self.map_options_frame.grid(row = 1, column = 0, sticky = "n", padx = 10)
+        self.map_options_frame.grid(row = 2, column = 0, sticky = "nwse", padx = 10)
         self.map_options_frame.grid_rowconfigure(0, minsize=5) #For padding at the top
-        self.map_options_frame.grid_columnconfigure(0, minsize=255) #For padding at the top
+        #self.map_options_frame.grid_columnconfigure(0, minsize=255) #For padding at the top
 
         #Start point selection GUI
         self.checkbox_lrt_val = IntVar()
-        self.checkbox_lrt = Checkbutton(self.map_options_frame, text = "Show LRT nodes", variable = self.checkbox_lrt_val, command = self.show_lrt_nodes)
+        self.checkbox_lrt = Checkbutton(self.map_options_frame, text = "LRT nodes", variable = self.checkbox_lrt_val, command = self.show_lrt_nodes)
         self.checkbox_lrt.grid(row = 0, column = 0, sticky = "w")
         self.checkbox_lrt.select()
         self.checkbox_mrt_val = IntVar()
-        self.checkbox_mrt = Checkbutton(self.map_options_frame, text = "Show MRT nodes", variable = self.checkbox_mrt_val, command = self.show_mrt_nodes)
-        self.checkbox_mrt.grid(row = 1, column = 0, sticky = "w")
+        self.checkbox_mrt = Checkbutton(self.map_options_frame, text = "MRT nodes", variable = self.checkbox_mrt_val, command = self.show_mrt_nodes)
+        self.checkbox_mrt.grid(row = 0, column = 1, sticky = "w")
         self.checkbox_mrt.select()
         self.checkbox_bus_val = IntVar()
-        self.checkbox_bus = Checkbutton(self.map_options_frame, text = "Show bus nodes", variable = self.checkbox_bus_val, command = self.show_bus_nodes)
-        self.checkbox_bus.grid(row = 2, column = 0, sticky = "w")
+        self.checkbox_bus = Checkbutton(self.map_options_frame, text = "bus nodes", variable = self.checkbox_bus_val, command = self.show_bus_nodes)
+        self.checkbox_bus.grid(row = 1, column = 0, sticky = "w")
         self.checkbox_bus.select()
         self.checkbox_hdb_val = IntVar()
-        self.checkbox_hdb = Checkbutton(self.map_options_frame, text = "Show HDB nodes", variable = self.checkbox_hdb_val, command = self.show_hdb_nodes)
-        self.checkbox_hdb.grid(row = 3, column = 0, sticky = "w")
+        self.checkbox_hdb = Checkbutton(self.map_options_frame, text = "HDB nodes", variable = self.checkbox_hdb_val, command = self.show_hdb_nodes)
+        self.checkbox_hdb.grid(row = 1, column = 1, sticky = "w")
         self.checkbox_hdb.select()
-
-        #TEMP
-        self.test_button = Button(self.map_options_frame, text = "TEST PATH DISPLAY", command = self.create_test_path)
-        self.test_button.grid(row = 4, column = 0, sticky = "w")
-
         "----------------------------------------------------------------------------------------------------------"
         #Map canvas
-        self.map_canvas = MapCanvas(self.map_tab, self.application, 800, 500)
+        self.map_canvas = MapCanvas(self.map_tab, self.application, self, 800, 500)
         self.map_canvas.grid(row = 0, column = 1, sticky = "w")
     #TEMP TO REMOVE
     def create_test_path(self):
@@ -137,6 +162,22 @@ class FrameGUI(Frame):
 
     def display_path(self, path):
         self.map_canvas.display_path(path)
+
+    def set_node_info(self, node):
+        self.selected_node = node
+
+        self.node_info_name["text"] = "Name: " + str(node.node_name)
+        self.node_info_type["text"] = "Type: " + str(node.node_type)
+        self.node_info_lat["text"] = "Lattitude: " + str(node.position.lattitude)
+        self.node_info_long["text"] = "Longitude: " + str(node.position.longitude)
+
+    def set_start_node(self):
+        self.application.selected_start_node = self.selected_node
+        self.start_point_entry_text.set(str(self.selected_node.node_name))
+
+    def set_end_node(self):
+        self.application.selected_end_node = self.selected_node
+        self.end_point_entry_text.set(str(self.selected_node.node_name))
 
     def show_lrt_nodes(self):
         self.map_canvas.set_icon_visibility(self.checkbox_lrt_val.get(), "lrt")

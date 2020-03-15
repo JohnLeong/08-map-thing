@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 import geopandas as geopandas
 import fiona  # ; help(fiona.open)
@@ -17,6 +18,8 @@ class Application():
         self.hdbnames = []
         self.busnames = []
         self.lrtnames = []
+        self.selected_start_node = None
+        self.selected_end_node = None
         self.load_map_data()
 
         # Initialise GUI
@@ -51,6 +54,21 @@ class Application():
             self.lrt_nodes.append(new_node)
             self.all_nodes.append(new_node)
             print(lrt.name[i], lrt.geometry.x[i], lrt.geometry.y[i], "loaded")
+
+    def find_path(self):
+        if (self.selected_start_node == None):
+            messagebox.showerror("Error finding path", "Please select a start point!")
+            return
+        if (self.selected_end_node == None):
+            messagebox.showerror("Error finding path", "Please select an end point!")
+            return
+        if (self.selected_start_node == self.selected_end_node):
+            messagebox.showerror("Error finding path", "Start and end point must be different!")
+            return
+
+        print("Finding path from '" + str(self.selected_start_node.node_name) + "' to '" + str(self.selected_end_node.node_name) + "'");
+        #self.dijkstra(self.selected_start_node, self.selected_end_node)
+
 
     ## TODO: found on youtube, need modify, need find map link using dictonary https://www.youtube.com/watch?v=Ub4-nG09PFw
     map = {
