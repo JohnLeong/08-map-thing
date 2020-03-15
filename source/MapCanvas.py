@@ -20,13 +20,16 @@ class MapCanvas(Canvas):
         self.canvas_size_x = size_x
         self.canvas_size_y = size_y
         self.application = application
+        self.selected_node = None
         self.path_lines = []
+        self.node_icons = {}
         self.create_map()
 
     def create_map(self):
         #Bind the mouse events to allow the dragging of map
         self.bind("<ButtonPress-1>", self.on_click)
         self.bind("<B1-Motion>", self.move_move)
+        self.bind("<Motion>", self.on_move)
         #self.bind("<ButtonPress-1>", self.on_click)
 
         #Create the map background image
@@ -59,24 +62,44 @@ class MapCanvas(Canvas):
     def on_click(self, event):
         self.move_start(event)
 
-        item = super().find_closest(super().canvasx(event.x), super().canvasy(event.y), halo=10)[0]
-        for node in self.application.all_nodes:
-            if (node.map_icon == item):
-                self.frame_gui.set_node_info(node)
+        items = super().find_closest(super().canvasx(event.x), super().canvasy(event.y), halo=5)
+        item = items[0]
+        if (self.selected_node is not None and item == self.selected_node.map_icon and len(items) > 1):
+            item = items[1]
+
+        if (item not in self.node_icons.keys()):
+            return
+
+        new_selected_node = self.node_icons[item]
+        if (self.selected_node is not None):
+            render_x, render_y = self.get_icon_render_pos(self.selected_node.position.longitude, self.selected_node.position.lattitude)
+            super().coords(self.selected_node.map_icon, render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE)
+
+        x1, y1, x2, y2 = super().coords(item)
+        super().coords(item, x1 - MapCanvas.NODE_SIZE, y1 - MapCanvas.NODE_SIZE, x2 + MapCanvas.NODE_SIZE, y2 + MapCanvas.NODE_SIZE)
+        self.frame_gui.set_node_info(new_selected_node)
+        self.selected_node = new_selected_node
+
+    def on_move(self, event):
+        pass
 
     def create_all_map_icons(self):
         for item in self.application.lrt_nodes:
             render_x, render_y = self.get_icon_render_pos(item.position.longitude, item.position.lattitude)
-            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_LRT)
+            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_LRT, activeoutline="yellow")
+            self.node_icons[item.map_icon] = item
         for item in self.application.mrt_nodes:
             render_x, render_y = self.get_icon_render_pos(item.position.longitude, item.position.lattitude)
-            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_MRT)
+            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_MRT, activeoutline="yellow")
+            self.node_icons[item.map_icon] = item
         for item in self.application.bus_stop_nodes:
             render_x, render_y = self.get_icon_render_pos(item.position.longitude, item.position.lattitude)
-            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_BUS)
+            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_BUS, activeoutline="yellow")
+            self.node_icons[item.map_icon] = item
         for item in self.application.hdb_nodes:
             render_x, render_y = self.get_icon_render_pos(item.position.longitude, item.position.lattitude)
-            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_HDB)
+            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_HDB, activeoutline="yellow")
+            self.node_icons[item.map_icon] = item
 
     def set_icon_visibility(self, viewable = True, target = "all"):
         target_list = None
