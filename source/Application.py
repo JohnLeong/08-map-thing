@@ -30,12 +30,12 @@ class Application():
     def load_map_data(self):
         # import hdb
          #TEMP comment out first because very slow
-        hdb = geopandas.read_file("map/new_hdb.geojson")
-        for i in range(0, len(hdb)):
-            new_node = MapNode(hdb.name[i], "hdb", hdb.geometry.y[i], hdb.geometry.x[i])
-            self.hdb_nodes.append(new_node)
-            self.all_nodes.append(new_node)
-            print(hdb.name[i], hdb.geometry.y[i], hdb.geometry.x[i], "loaded")
+        # hdb = geopandas.read_file("map/new_hdb.geojson")
+        # for i in range(0, len(hdb)):
+        #     new_node = MapNode(hdb.name[i], "hdb", hdb.geometry.y[i], hdb.geometry.x[i])
+        #     self.hdb_nodes.append(new_node)
+        #     self.all_nodes.append(new_node)
+        #     print(hdb.name[i], hdb.geometry.y[i], hdb.geometry.x[i], "loaded")
 
         # import bus_stop
         bus = geopandas.read_file("map/new_bus.geojson")

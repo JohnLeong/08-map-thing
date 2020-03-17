@@ -4,8 +4,8 @@ from tkinter import ttk
 class MapCanvas(Canvas):
     BACKGROUND_COLOR = "#00ffff"
     MAP_IMAGE_PATH = "images/p2.png"
-    MAP_BOUNDS_X = (103.886964, 103.931048)
-    MAP_BOUNDS_Y = (1.385900, 1.421450)
+    MAP_BOUNDS_X = (103.886964, 103.931548)
+    MAP_BOUNDS_Y = (1.385900, 1.421050)
     MAP_SIZE_X = 500 #size of the rendered map image, TEMPORARY
     MAP_SIZE_Y = 500
     NODE_SIZE = 5
@@ -30,7 +30,6 @@ class MapCanvas(Canvas):
         self.bind("<ButtonPress-1>", self.on_click)
         self.bind("<B1-Motion>", self.move_move)
         self.bind("<Motion>", self.on_move)
-        #self.bind("<ButtonPress-1>", self.on_click)
 
         #Create the map background image
         self.img = PhotoImage(file = MapCanvas.MAP_IMAGE_PATH)
@@ -76,9 +75,10 @@ class MapCanvas(Canvas):
             super().coords(self.selected_node.map_icon, render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE)
 
         x1, y1, x2, y2 = super().coords(item)
-        super().coords(item, x1 - MapCanvas.NODE_SIZE, y1 - MapCanvas.NODE_SIZE, x2 + MapCanvas.NODE_SIZE, y2 + MapCanvas.NODE_SIZE)
+        super().coords(item, x1 - MapCanvas.NODE_SIZE * 0.5, y1 - MapCanvas.NODE_SIZE * 0.5, x2 + MapCanvas.NODE_SIZE * 0.5, y2 + MapCanvas.NODE_SIZE * 0.5)
         self.frame_gui.set_node_info(new_selected_node)
         self.selected_node = new_selected_node
+        super().tag_raise(new_selected_node)
 
     def on_move(self, event):
         pass
