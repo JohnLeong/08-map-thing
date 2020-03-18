@@ -60,7 +60,7 @@ def dijkstra(graph, start, goal):   # dijkstra algorithm to set graph, start & g
     path.insert(0, start)
     if shortest_distance[goal] != infinity:
         print('Shortest distance is ' + str(shortest_distance[goal]))   # find shortest distance
-        print('And the path is ' + str(path))   # find path taken by the nodes
+        print('Path taken is ' + str(path))   # find path taken by the nodes
 
 # sample of finding path and distance between nodes
 #dijkstra(graph, '7246484954', '6374981557')
