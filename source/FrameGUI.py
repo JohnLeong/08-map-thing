@@ -200,6 +200,10 @@ class FrameGUI(Frame):
         self.credits_tab.grid(row = 0, column = 0, sticky = "w")
         self.tab_control.add(self.credits_tab, text = "Credits")
 
+        #callbacks for when user manually inputs values to the start and and point entries
+        self.start_point_entry_text.trace("w", lambda *_, sv=self.start_point_entry_text: app.callback1(sv))
+        self.end_point_entry_text.trace("w", lambda *_, sv=self.end_point_entry_text: app.callback2(sv))
+
     def display_path(self, path):
         self.map_canvas.display_path(path)
 
@@ -229,3 +233,7 @@ class FrameGUI(Frame):
         self.map_canvas.set_icon_visibility(self.checkbox_hdb_val.get(), "hdb")
     def show_bus_nodes(self):
         self.map_canvas.set_icon_visibility(self.checkbox_bus_val.get(), "bus")
+
+
+
+

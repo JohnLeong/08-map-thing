@@ -55,6 +55,13 @@ class Application():
             self.all_nodes.append(new_node)
             print(lrt.name[i], lrt.geometry.x[i], lrt.geometry.y[i], "loaded")
 
+        #for sorting the all_nodes array that will be used for BINARY SEARCH
+        self.all_nodes.sort(key=lambda x: x.node_name)
+        for i in self.all_nodes:
+            print("This is node name: " + i.node_name)
+
+
+
     def find_path(self):
         if (self.selected_start_node == None):
             messagebox.showerror("Error finding path", "Please select a start point!")
@@ -91,3 +98,13 @@ def get_hdb():
     for i in range(0, len(hdb)):
         block.append(hdb.name[i])
     return block
+
+def callback1(sv):
+    #to iterate across the whole list to search for what user has keyed in
+    print("start changed", end=" ")
+    print(str(sv.get()))
+
+def callback2(sv):
+    #to iterate across whole list and show in list box what could be related to user thing
+    print("end changed", end=" ")
+    print(str(sv.get()))
