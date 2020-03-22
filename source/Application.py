@@ -85,9 +85,7 @@ class Application():
     def bin_search_all_nodes(self, selectedtext):
         start = 0
         end = (len(self.all_nodes))-1
-
         while start <= end:
-
             mid = int((start + end) / 2)
             n = self.all_nodes[mid]
 
@@ -101,6 +99,8 @@ class Application():
             else:
                 print("found")
                 return n
+
+
 
 def get_lrt():
     lrtnames = []
@@ -125,6 +125,8 @@ def get_hdb():
         block.append(hdb.name[i])
     return block
 
+
+#callback functions that will be called when start and end node textboxes(Entry) are updated
 def callback1(sv):
     #to iterate across the whole list to search for what user has keyed in
     print("start changed", end=" ")

@@ -247,15 +247,35 @@ class FrameGUI(Frame):
     def search_and_set_start_node(self, event):
         index = self.start_point_list.curselection()
         seltext = self.start_point_list.get(index)
+
+        #TEMPORARY FOR TESTING
         print("start find: " + seltext)
+
+        #bin search through the all_nodes array to find the node corr. to listbox selection name
         nodestart = self.application.bin_search_all_nodes(seltext)
+
+        # append the selection text to textbox
+        self.start_point_entry.delete(0, END)
+        self.start_point_entry.insert(0, nodestart.node_name)
+
+        #assign node as the selected start node
         self.application.selected_start_node = nodestart
 
     def search_and_set_end_node(self, event):
         index = self.end_point_list.curselection()
         seltext = self.end_point_list.get(index)
+
+        #TEMPORARY FOR TESTING
         print("end find: " + seltext)
+
+        #bin search through the all_nodes array to find the node corr. to listbox selection name
         nodeend = self.application.bin_search_all_nodes(seltext)
+
+        #append the selection text to textbox
+        self.end_point_entry.delete(0, END)
+        self.end_point_entry.insert(0, nodeend.node_name)
+
+        #assign node as selected end node
         self.application.selected_end_node = nodeend
 
 
