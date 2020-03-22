@@ -201,8 +201,8 @@ class FrameGUI(Frame):
         self.tab_control.add(self.credits_tab, text = "Credits")
 
         #callbacks for when user manually inputs values to the start and and point entries
-        self.start_point_entry_text.trace("w", lambda *_, sv=self.start_point_entry_text: app.callback1(sv))
-        self.end_point_entry_text.trace("w", lambda *_, sv=self.end_point_entry_text: app.callback2(sv))
+        self.start_point_entry_text.trace("w", lambda *_, sv=self.start_point_entry_text: self.callback_start(sv))
+        self.end_point_entry_text.trace("w", lambda *_, sv=self.end_point_entry_text: self.callback_end(sv))
 
         #binding of each selection of start and end node list boxes to 'single clicks'
         #function will run when user makes a new click in the list box
@@ -242,6 +242,55 @@ class FrameGUI(Frame):
         self.map_canvas.set_icon_visibility(self.checkbox_bus_val.get(), "bus")
 
 
+
+    # callback functions that will be called when start and end node textboxes(Entry) are updated
+    def callback_start(self, sv):
+        #to iterate across the whole list to search for what user has keyed in
+
+        #TEMPORARY PRINT
+        print("start autocomplete")
+        usertext = str(sv.get())
+        self.start_point_list.delete(0, END)
+
+        self.start_point_list.insert(END, "----------LRT----------")
+        for i in range(0, len(self.lrtstop)):
+            if usertext.lower() in self.lrtstop[i].lower():
+                self.start_point_list.insert(END, self.lrtstop[i])
+        self.start_point_list.insert(END, "----------BUS----------")
+        for i in range(0, len(self.busstop)):
+            if usertext.lower() in self.busstop[i].lower():
+                self.start_point_list.insert(END, self.busstop[i])
+        self.start_point_list.insert(END, "----------HDB----------")
+        for i in range(0, len(self.hdb)):
+            if self.hdb[i] is not None:
+                if usertext.lower() in self.hdb[i].lower():
+                    self.start_point_list.insert(END, self.hdb[i])
+
+    def callback_end(self, sv):
+        # to iterate across whole list and show in list box what could be related to user thing
+
+        #TEMPORARY PRINT
+        print("end autocomplete")
+
+        usertext = str(sv.get())
+        self.end_point_list.delete(0, END)
+
+        self.end_point_list.insert(END, "----------LRT----------")
+        for i in range(0, len(self.lrtstop)):
+            if usertext.lower() in self.lrtstop[i].lower():
+                self.end_point_list.insert(END, self.lrtstop[i])
+        self.end_point_list.insert(END, "----------BUS----------")
+        for i in range(0, len(self.busstop)):
+            if usertext.lower() in self.busstop[i].lower():
+                self.end_point_list.insert(END, self.busstop[i])
+        self.end_point_list.insert(END, "----------HDB----------")
+        for i in range(0, len(self.hdb)):
+            if self.hdb[i] is not None:
+                if usertext.lower() in self.hdb[i].lower():
+                    self.end_point_list.insert(END, self.hdb[i])
+
+
+
     #gets the selected text in the listbox and searches through the all_nodes array for node with
     #the same node name
     def search_and_set_start_node(self, event):
@@ -277,10 +326,3 @@ class FrameGUI(Frame):
 
         #assign node as selected end node
         self.application.selected_end_node = nodeend
-
-
-
-
-
-
-

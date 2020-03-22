@@ -126,16 +126,4 @@ def get_hdb():
     return block
 
 
-#callback functions that will be called when start and end node textboxes(Entry) are updated
-def callback1(sv):
-    #to iterate across the whole list to search for what user has keyed in
-    print("start changed", end=" ")
-    print(str(sv.get()))
-
-def callback2(sv):
-    #to iterate across whole list and show in list box what could be related to user thing
-    print("end changed", end=" ")
-    print(str(sv.get()))
-
-
 
