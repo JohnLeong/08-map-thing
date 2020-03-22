@@ -204,6 +204,13 @@ class FrameGUI(Frame):
         self.start_point_entry_text.trace("w", lambda *_, sv=self.start_point_entry_text: app.callback1(sv))
         self.end_point_entry_text.trace("w", lambda *_, sv=self.end_point_entry_text: app.callback2(sv))
 
+        #binding of each selection of start and end node list boxes to 'single clicks'
+        #function will run when user makes a new click in the list box
+        self.start_point_list.bind('<ButtonRelease-1>', self.search_and_set_start_node)
+        self.end_point_list.bind('<ButtonRelease-1>', self.search_and_set_end_node)
+
+
+
     def display_path(self, path):
         self.map_canvas.display_path(path)
 
@@ -233,6 +240,26 @@ class FrameGUI(Frame):
         self.map_canvas.set_icon_visibility(self.checkbox_hdb_val.get(), "hdb")
     def show_bus_nodes(self):
         self.map_canvas.set_icon_visibility(self.checkbox_bus_val.get(), "bus")
+
+
+    #gets the selected text in the listbox and searches through the all_nodes array for node with
+    #the same node name
+    def search_and_set_start_node(self, event):
+        index = self.start_point_list.curselection()
+        seltext = self.start_point_list.get(index)
+        print("start find: " + seltext)
+        nodestart = self.application.bin_search_all_nodes(seltext)
+        self.application.selected_start_node = nodestart
+
+    def search_and_set_end_node(self, event):
+        index = self.end_point_list.curselection()
+        seltext = self.end_point_list.get(index)
+        print("end find: " + seltext)
+        nodeend = self.application.bin_search_all_nodes(seltext)
+        self.application.selected_end_node = nodeend
+
+
+
 
 
 

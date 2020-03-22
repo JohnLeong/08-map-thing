@@ -55,8 +55,11 @@ class Application():
             self.all_nodes.append(new_node)
             print(lrt.name[i], lrt.geometry.x[i], lrt.geometry.y[i], "loaded")
 
+
         #for sorting the all_nodes array that will be used for BINARY SEARCH
         self.all_nodes.sort(key=lambda x: x.node_name)
+
+        #TEMPORARY ONLY(prints all node names in all_nodes array
         for i in self.all_nodes:
             print("This is node name: " + i.node_name)
 
@@ -75,6 +78,29 @@ class Application():
 
         print("Finding path from '" + str(self.selected_start_node.node_name) + "' to '" + str(self.selected_end_node.node_name) + "'");
         #self.dijkstra(self.selected_start_node, self.selected_end_node)
+
+
+
+    #binary search algorithm
+    def bin_search_all_nodes(self, selectedtext):
+        start = 0
+        end = (len(self.all_nodes))-1
+
+        while start <= end:
+
+            mid = int((start + end) / 2)
+            n = self.all_nodes[mid]
+
+            #if text is smaller, look left
+            if n.node_name > selectedtext:
+                end = mid - 1
+            #if text is larger, look right
+            elif n.node_name < selectedtext:
+                start = mid + 1
+            #if text is middle, return the node
+            else:
+                print("found")
+                return n
 
 def get_lrt():
     lrtnames = []
@@ -108,3 +134,6 @@ def callback2(sv):
     #to iterate across whole list and show in list box what could be related to user thing
     print("end changed", end=" ")
     print(str(sv.get()))
+
+
+
