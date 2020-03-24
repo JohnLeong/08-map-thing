@@ -28,12 +28,6 @@ class FrameGUI(Frame):
         """ Creates all the GUI to be rendered onto the program window
             Add new GUI elements here
         """
-        self.lrtstop = []
-        self.lrtstop = app.get_lrt()
-        self.busstop = []
-        self.busstop = app.get_busstop()
-        self.hdb = []
-        self.hdb = app.get_hdb()
 
         #Tab controls
         self.tab_control = ttk.Notebook(self)
@@ -75,14 +69,14 @@ class FrameGUI(Frame):
 
         #TEMPORARY
         self.start_point_list.insert(END, "----------LRT----------")
-        for i in range(0, len(self.lrtstop)):
-            self.start_point_list.insert(END, self.lrtstop[i])
+        for i in range(0, len(self.application.lrtnames)):
+            self.start_point_list.insert(END, self.application.lrtnames[i])
         self.start_point_list.insert(END, "----------BUS----------")
-        for i in range(0, len(self.busstop)):
-            self.start_point_list.insert(END, self.busstop[i])
+        for i in range(0, len(self.application.busnames)):
+            self.start_point_list.insert(END, self.application.busnames[i])
         self.start_point_list.insert(END, "----------HDB----------")
-        for i in range(0, len(self.hdb)):
-            self.start_point_list.insert(END, self.hdb[i])
+        for i in range(0, len(self.application.hdbnames)):
+            self.start_point_list.insert(END, self.application.hdbnames[i])
 
         #End point selection GUI
         self.end_point_label = Label(self.map_control_frame, text = "Select ending point", font = ('Calibri', 9))
@@ -101,14 +95,14 @@ class FrameGUI(Frame):
 
         #TEMPORARY
         self.end_point_list.insert(END, "----------LRT----------")
-        for i in range(0, len(self.lrtstop)):
-            self.end_point_list.insert(END, self.lrtstop[i])
+        for i in range(0, len(self.application.lrtnames)):
+            self.end_point_list.insert(END, self.application.lrtnames[i])
         self.end_point_list.insert(END, "----------BUS----------")
-        for i in range(0, len(self.busstop)):
-            self.end_point_list.insert(END, self.busstop[i])
+        for i in range(0, len(self.application.busnames)):
+            self.end_point_list.insert(END, self.application.busnames[i])
         self.end_point_list.insert(END, "----------HDB----------")
-        for i in range(0, len(self.hdb)):
-            self.end_point_list.insert(END, self.hdb[i])
+        for i in range(0, len(self.application.hdbnames)):
+            self.end_point_list.insert(END, self.application.hdbnames[i])
 
         self.map_control_frame.grid_rowconfigure(7, minsize=10)
         self.find_path_button = Button(self.map_control_frame, text = "Find path", command = self.application.find_path)

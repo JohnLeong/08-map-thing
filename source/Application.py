@@ -5,6 +5,7 @@ import geopandas as geopandas
 import fiona  # ; help(fiona.open)
 from FrameGUI import *
 from MapNode import *
+import math as math
 
 class Application():
 
@@ -35,6 +36,7 @@ class Application():
         #     new_node = MapNode(hdb.name[i], "hdb", hdb.geometry.y[i], hdb.geometry.x[i])
         #     self.hdb_nodes.append(new_node)
         #     self.all_nodes.append(new_node)
+        #     self.hdbnames.append(hdb.name[i])
         #     print(hdb.name[i], hdb.geometry.y[i], hdb.geometry.x[i], "loaded")
 
         # import bus_stop
@@ -44,6 +46,7 @@ class Application():
             new_node = MapNode(bus.name[i], "bus", bus.geometry.y[i], bus.geometry.x[i])
             self.bus_stop_nodes.append(new_node)
             self.all_nodes.append(new_node)
+            self.busnames.append(bus.name[i])
             print(bus.name[i], bus.geometry.y[i], bus.geometry.x[i], "loaded")
 
         # import lrt
@@ -53,6 +56,7 @@ class Application():
             new_node = MapNode(lrt.name[i], "lrt", lrt.geometry.y[i], lrt.geometry.x[i])
             self.lrt_nodes.append(new_node)
             self.all_nodes.append(new_node)
+            self.lrtnames.append(lrt.name[i])
             print(lrt.name[i], lrt.geometry.x[i], lrt.geometry.y[i], "loaded")
 
 
@@ -100,30 +104,16 @@ class Application():
                 print("found")
                 return n
 
-
-
-def get_lrt():
-    lrtnames = []
-    lrt = geopandas.read_file("map/new_lrt.geojson")
-
-    for i in range(0, len(lrt)):
-        lrtnames.append(lrt.name[i])
-    return lrtnames
-
-def get_busstop():
-    busnames = []
-    bus = geopandas.read_file("map/new_bus.geojson")
-
-    for i in range(0, len(bus)):
-        busnames.append(bus.name[i])
-    return busnames
-def get_hdb():
-    block = []
-    hdb = geopandas.read_file("map/new_hdb.geojson")
-
-    for i in range(0, len(hdb)):
-        block.append(hdb.name[i])
-    return block
-
-
-
+#distance between start and end node in a straight line
+def distance(latStart,lonStart,latEnd,lonEnd):
+    R = 6373.0 #radius of earth
+    lat1 = math.radians(latStart)
+    lon1 = math.radians(lonStart)
+    lat2 = math.radians(latEnd)
+    lon2 = math.radians(lonEnd)
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    distance = R * c
+    return distance
