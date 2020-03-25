@@ -69,14 +69,17 @@ class FrameGUI(Frame):
 
         #TEMPORARY
         self.start_point_list.insert(END, "----------LRT----------")
-        for i in range(0, len(self.application.lrtnames)):
-            self.start_point_list.insert(END, self.application.lrtnames[i])
+        for i in range(0, len(self.application.all_nodes)):
+            if self.application.all_nodes[i].node_type == "lrt":
+                self.start_point_list.insert(END, self.application.all_nodes[i].node_name)
         self.start_point_list.insert(END, "----------BUS----------")
-        for i in range(0, len(self.application.busnames)):
-            self.start_point_list.insert(END, self.application.busnames[i])
+        for i in range(0, len(self.application.all_nodes)):
+            if self.application.all_nodes[i].node_type == "bus":
+                self.start_point_list.insert(END, self.application.all_nodes[i].node_name)
         self.start_point_list.insert(END, "----------HDB----------")
-        for i in range(0, len(self.application.hdbnames)):
-            self.start_point_list.insert(END, self.application.hdbnames[i])
+        for i in range(0, len(self.application.all_nodes)):
+            if self.application.all_nodes[i].node_type == "hdb":
+                self.start_point_list.insert(END, self.application.all_nodes[i].node_name)
 
         #End point selection GUI
         self.end_point_label = Label(self.map_control_frame, text = "Select ending point", font = ('Calibri', 9))
@@ -95,14 +98,17 @@ class FrameGUI(Frame):
 
         #TEMPORARY
         self.end_point_list.insert(END, "----------LRT----------")
-        for i in range(0, len(self.application.lrtnames)):
-            self.end_point_list.insert(END, self.application.lrtnames[i])
+        for i in range(0, len(self.application.all_nodes)):
+            if self.application.all_nodes[i].node_type == "lrt":
+                self.end_point_list.insert(END, self.application.all_nodes[i].node_name)
         self.end_point_list.insert(END, "----------BUS----------")
-        for i in range(0, len(self.application.busnames)):
-            self.end_point_list.insert(END, self.application.busnames[i])
+        for i in range(0, len(self.application.all_nodes)):
+            if self.application.all_nodes[i].node_type == "bus":
+                self.end_point_list.insert(END, self.application.all_nodes[i].node_name)
         self.end_point_list.insert(END, "----------HDB----------")
-        for i in range(0, len(self.application.hdbnames)):
-            self.end_point_list.insert(END, self.application.hdbnames[i])
+        for i in range(0, len(self.application.all_nodes)):
+            if self.application.all_nodes[i].node_type == "hdb":
+                self.end_point_list.insert(END, self.application.all_nodes[i].node_name)
 
         self.map_control_frame.grid_rowconfigure(7, minsize=10)
         self.find_path_button = Button(self.map_control_frame, text = "Find path", command = self.application.find_path)
