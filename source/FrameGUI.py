@@ -253,18 +253,21 @@ class FrameGUI(Frame):
         self.start_point_list.delete(0, END)
 
         self.start_point_list.insert(END, "----------LRT----------")
-        for i in range(0, len(self.lrtstop)):
-            if usertext.lower() in self.lrtstop[i].lower():
-                self.start_point_list.insert(END, self.lrtstop[i])
+        for i in range(0, len(self.application.all_nodes)):
+            if  self.application.all_nodes[i].node_type =="lrt":
+                if usertext.lower() in self.application.all_nodes[i].node_name.lower():
+                    self.start_point_list.insert(END, self.application.all_nodes[i].node_name)
         self.start_point_list.insert(END, "----------BUS----------")
-        for i in range(0, len(self.busstop)):
-            if usertext.lower() in self.busstop[i].lower():
-                self.start_point_list.insert(END, self.busstop[i])
+        for i in range(0, len(self.application.all_nodes)):
+            if self.application.all_nodes[i].node_type == "bus":
+                if usertext.lower() in self.application.all_nodes[i].node_name.lower():
+                    self.start_point_list.insert(END, self.application.all_nodes[i].node_name)
         self.start_point_list.insert(END, "----------HDB----------")
-        for i in range(0, len(self.hdb)):
-            if self.hdb[i] is not None:
-                if usertext.lower() in self.hdb[i].lower():
-                    self.start_point_list.insert(END, self.hdb[i])
+        for i in range(0, len(self.application.all_nodes)):
+            if self.application.all_nodes[i].node_type == "hdb":
+                if self.application.all_nodes[i] is not None:
+                    if usertext.lower() in self.application.all_nodes[i].node_name.lower():
+                        self.start_point_list.insert(END, self.application.all_nodes[i].node_name)
 
     def callback_end(self, sv):
         # to iterate across whole list and show in list box what could be related to user thing
@@ -276,18 +279,21 @@ class FrameGUI(Frame):
         self.end_point_list.delete(0, END)
 
         self.end_point_list.insert(END, "----------LRT----------")
-        for i in range(0, len(self.lrtstop)):
-            if usertext.lower() in self.lrtstop[i].lower():
-                self.end_point_list.insert(END, self.lrtstop[i])
+        for i in range(0, len(self.application.all_nodes)):
+            if self.application.all_nodes[i].node_type == "lrt":
+                if usertext.lower() in self.application.all_nodes[i].node_name.lower():
+                    self.end_point_list.insert(END, self.application.all_nodes[i].node_name)
         self.end_point_list.insert(END, "----------BUS----------")
-        for i in range(0, len(self.busstop)):
-            if usertext.lower() in self.busstop[i].lower():
-                self.end_point_list.insert(END, self.busstop[i])
+        for i in range(0, len(self.application.all_nodes)):
+            if self.application.all_nodes[i].node_type == "hdb":
+                if usertext.lower() in self.application.all_nodes[i].node_name.lower():
+                    self.end_point_list.insert(END, self.application.all_nodes[i].node_name)
         self.end_point_list.insert(END, "----------HDB----------")
-        for i in range(0, len(self.hdb)):
-            if self.hdb[i] is not None:
-                if usertext.lower() in self.hdb[i].lower():
-                    self.end_point_list.insert(END, self.hdb[i])
+        for i in range(0, len(self.application.all_nodes)):
+            if self.application.all_nodes[i].node_type == "hdb":
+                if self.application.all_nodes[i] is not None:
+                    if usertext.lower() in self.application.all_nodes[i].node_name.lower():
+                        self.end_point_list.insert(END, self.application.all_nodes[i].node_name)
 
 
 
