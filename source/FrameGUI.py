@@ -145,10 +145,10 @@ class FrameGUI(Frame):
         self.path_info_bus_dist.grid(row = 4, column = 0, sticky = "w", padx = 10)
         self.path_info_mrt_dist = Label(self.path_info_frame, text = "MRT/LRT distance: ", font = ('Calibri', 9))
         self.path_info_mrt_dist.grid(row = 5, column = 0, sticky = "w", padx = 10)
-        self.path_info_mrt_dist = Label(self.path_info_frame, text = "Travel costs: ", font = ('Calibri', 9))
-        self.path_info_mrt_dist.grid(row = 6, column = 0, sticky = "w", padx = 10)
-        self.path_info_mrt_dist = Label(self.path_info_frame, text = "Calories burnt: ", font = ('Calibri', 9))
-        self.path_info_mrt_dist.grid(row = 7, column = 0, sticky = "w", padx = 10)
+        self.path_info_travel_cost = Label(self.path_info_frame, text = "Travel costs: ", font = ('Calibri', 9))
+        self.path_info_travel_cost.grid(row = 6, column = 0, sticky = "w", padx = 10)
+        self.path_info_calories = Label(self.path_info_frame, text = "Calories burnt: ", font = ('Calibri', 9))
+        self.path_info_calories.grid(row = 7, column = 0, sticky = "w", padx = 10)
 
         self.node_info_button_frame = Frame(self.path_info_frame)
         self.node_info_button_frame.grid(row = 8, column = 0, sticky="we", padx = 5)
@@ -199,11 +199,6 @@ class FrameGUI(Frame):
         self.start_point_list.bind('<ButtonRelease-1>', self.search_and_set_start_node)
         self.end_point_list.bind('<ButtonRelease-1>', self.search_and_set_end_node)
 
-
-
-    def display_path(self, path):
-        self.map_canvas.display_path(path)
-
     def set_node_info(self, node):
         self.selected_node = node
 
@@ -216,18 +211,17 @@ class FrameGUI(Frame):
         if (self.selected_node):
             self.start_point_entry_text.set(str(self.selected_node.node_name))
             self.start_point_entry.config({"background": FrameGUI.ENTRY_VALID_COL})
-        self.application.selected_start_node = self.selected_node
+            self.application.selected_start_node = self.selected_node
 
     def set_end_node(self):
         if (self.selected_node):
             self.end_point_entry_text.set(str(self.selected_node.node_name))
             self.end_point_entry.config({"background": FrameGUI.ENTRY_VALID_COL})
-        self.application.selected_end_node = self.selected_node
+            self.application.selected_end_node = self.selected_node
 
     def unset_start_node(self):
         self.start_point_entry.config({"background": FrameGUI.ENTRY_INVALID_COL})
         self.application.selected_start_node = None
-        print("UNSET S")
 
     def unset_end_node(self):
         self.end_point_entry.config({"background": FrameGUI.ENTRY_INVALID_COL})
@@ -328,3 +322,18 @@ class FrameGUI(Frame):
         #assign node as selected end node
         self.application.selected_end_node = nodeend
         self.end_point_entry.config({"background": FrameGUI.ENTRY_VALID_COL})
+
+    def display_path_info(self, path):
+        total_dist, walking_dist, bus_dist, lrt_dist = app.Application.find_path_distance(path)
+        self.path_info_start["text"] = path[0].node_name
+        self.path_info_end["text"] = path[-1].node_name
+
+        self.path_info_dist["text"] = "Total distance: " + str(total_dist)
+        self.path_info_walk_dist["text"] = "Walking distance: " + str(walking_dist)
+        self.path_info_bus_dist["text"] = "Bus distance: " + str(bus_dist)
+        self.path_info_mrt_dist["text"] = "MRT/LRT distance: " + str(lrt_dist)
+
+        ## TODO: Calculate travel costs based on distance
+        # TODO: Calculate calories burnt from walking
+        self.path_info_travel_cost["text"] = "Travel costs: "
+        self.path_info_calories["text"] = "Calories burnt: "

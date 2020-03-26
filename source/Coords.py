@@ -1,4 +1,4 @@
-from math import *
+import math as math
 
 class Coords():
     def __init__(self, lattitude = 0, longitude = 0):
@@ -11,7 +11,7 @@ class Coords():
         Parameters:
         other(Coords) :    The other Coord
         """
-        return sqrt((self.lattitude - other.lattitude) ** 2, (self.longitude - other.longitude) ** 2)
+        return math.sqrt((self.lattitude - other.lattitude) ** 2, (self.longitude - other.longitude) ** 2)
 
     def distance_from_sqr(self, other):
         """Gets the distance squared from this Coord to another Coord in terms of lattitude and longitude length

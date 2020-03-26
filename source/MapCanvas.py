@@ -86,19 +86,19 @@ class MapCanvas(Canvas):
     def create_all_map_icons(self):
         for item in self.application.lrt_nodes:
             render_x, render_y = self.get_icon_render_pos(item.position.longitude, item.position.lattitude)
-            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_LRT, activeoutline="yellow")
+            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_LRT, activeoutline="yellow", tags="node")
             self.node_icons[item.map_icon] = item
         for item in self.application.mrt_nodes:
             render_x, render_y = self.get_icon_render_pos(item.position.longitude, item.position.lattitude)
-            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_MRT, activeoutline="yellow")
+            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_MRT, activeoutline="yellow", tags="node")
             self.node_icons[item.map_icon] = item
         for item in self.application.bus_stop_nodes:
             render_x, render_y = self.get_icon_render_pos(item.position.longitude, item.position.lattitude)
-            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_BUS, activeoutline="yellow")
+            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_BUS, activeoutline="yellow", tags="node")
             self.node_icons[item.map_icon] = item
         for item in self.application.hdb_nodes:
             render_x, render_y = self.get_icon_render_pos(item.position.longitude, item.position.lattitude)
-            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_HDB, activeoutline="yellow")
+            item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_HDB, activeoutline="yellow", tags="node")
             self.node_icons[item.map_icon] = item
 
     def set_icon_visibility(self, viewable = True, target = "all"):
@@ -127,17 +127,16 @@ class MapCanvas(Canvas):
         render_x = render_x * MapCanvas.MAP_SIZE_X
         render_y = render_y * MapCanvas.MAP_SIZE_Y
         return render_x, -render_y
-
     def display_path(self, path: list):
         """Displays a path on the map
 
         Parameters:
         path:    A list of mapnodes which form the path
         """
-        self.path_lines = []
-        #self.set_icon_visibility(viewable = False, target = "all")
-        #for i in range(len(path)):
-        #    super().itemconfigure(path[i].map_icon, state = 'normal')
+        #Clear previous path
+        for i in range(len(self.path_lines) - 1, -1, -1):
+            super().delete(self.path_lines[i])
+        #Render new path
         for i in range(len(path) - 1):
             start_x, start_y = self.get_icon_render_pos(path[i].position.longitude, path[i].position.lattitude)
             end_x, end_y = self.get_icon_render_pos(path[i + 1].position.longitude, path[i + 1].position.lattitude)

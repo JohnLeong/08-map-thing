@@ -24,7 +24,6 @@ class Application():
         self.gui = FrameGUI(Tk(), self)
         self.gui.mainloop()
 
-    ## TODO:Load map data from text files into the varius node lists
     def load_map_data(self):
         # import hdb
          #TEMP comment out first because very slow
@@ -72,7 +71,14 @@ class Application():
             return
 
         print("Finding path from '" + str(self.selected_start_node.node_name) + "' to '" + str(self.selected_end_node.node_name) + "'");
-        #self.dijkstra(self.selected_start_node, self.selected_end_node)
+        #path = self.dijkstra(self.selected_start_node, self.selected_end_node)
+        path = []
+        for i in range(10):
+            path.append(self.all_nodes[i])
+
+        messagebox.showerror("Hi", "This path is only a placeholder to preview the drawing of lines")
+        self.gui.display_path_info(path)
+        self.gui.map_canvas.display_path(path)
 
     #binary search algorithm
     def bin_search_all_nodes(self, selectedtext):
@@ -92,3 +98,22 @@ class Application():
             else:
                 print("found")
                 return n
+
+    @staticmethod
+    def find_path_distance(path):
+        total_dist = walking_dist = bus_dist = lrt_dist = 0
+
+        for i in range(len(path) - 1):
+            dist_to_next = path[i].position.real_distance_from(path[i + 1].position)
+            total_dist += dist_to_next
+            if (path[i].node_type == path[i + 1].node_type):
+                if (path[i].node_type == "bus"):
+                    bus_dist += dist_to_next
+                elif (path[i].node_type == "lrt"):
+                    lrt_dist += dist_to_next
+                else:
+                    print("Unknown node combination:", path[i].node_type, path[i + 1].node_type)
+            else:
+                walking_dist += dist_to_next
+
+        return total_dist, walking_dist, bus_dist, lrt_dist
