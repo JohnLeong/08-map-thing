@@ -1,0 +1,1895 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+       {
+			"type": "Feature",
+			"id": "65009",
+			"properties": {
+				"number": "65009",
+				"services": [
+					"3",
+					"34",
+					"43",
+					"50",
+					"62",
+					"82",
+					"83",
+					"84",
+					"85",
+					"117",
+					"118",
+					"119",
+					"136",
+					"381",
+					"382",
+					"386",
+					"34A",
+					"43M",
+					"43e",
+					"62A",
+					"382A",
+					"382G",
+					"382W",
+					"386A"
+				],
+				"name": "Punggol Temp Int"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90224337575333,
+					1.40370629859822
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65071",
+			"properties": {
+				"number": "65071",
+				"services": [
+					"3",
+					"34",
+					"82",
+					"83",
+					"136",
+					"6N"
+				],
+				"name": "Opp Blk 103A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90416383740006,
+					1.39845074063981
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65079",
+			"properties": {
+				"number": "65079",
+				"services": [
+					"3",
+					"34",
+					"82",
+					"83",
+					"136",
+					"34A"
+				],
+				"name": "Blk 102C"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90474802293774,
+					1.39893574516181
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65081",
+			"properties": {
+				"number": "65081",
+				"services": [
+					"34"
+				],
+				"name": "Opp Blk 199C"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90531038561681,
+					1.40092158845981
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65089",
+			"properties": {
+				"number": "65089",
+				"services": [
+					"34",
+					"34A"
+				],
+				"name": "Opp Blk 296"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90580511592151,
+					1.4013394838038
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65091",
+			"properties": {
+				"number": "65091",
+				"services": [
+					"84"
+				],
+				"name": "BLK 301A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90655641325277,
+					1.4039796271467
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65099",
+			"properties": {
+				"number": "65099",
+				"services": [
+					"84"
+				],
+				"name": "BLK 604A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90711426733175,
+					1.40446781720997
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65121",
+			"properties": {
+				"number": "65121",
+				"services": [
+					"84"
+				],
+				"name": "Opp Track 22"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90948006873528,
+					1.4167057619144
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65129",
+			"properties": {
+				"number": "65129",
+				"services": [
+					"84"
+				],
+				"name": "Aft Track 22"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90966514650623,
+					1.41636994946863
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65139",
+			"properties": {
+				"number": "65139",
+				"services": [
+					"84"
+				],
+				"name": "Punggol Rd End"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91053469680278,
+					1.4206253932076
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65141",
+			"properties": {
+				"number": "65141",
+				"services": [
+					"43",
+					"117",
+					"118",
+					"381",
+					"43M",
+					"43e"
+				],
+				"name": "Soo Teck Stn"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.89716388800268,
+					1.40454805557377
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65149",
+			"properties": {
+				"number": "65149",
+				"services": [
+					"43",
+					"117",
+					"118",
+					"381",
+					"43M",
+					"43e"
+				],
+				"name": "Soo Teck Stn"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.89692479945528,
+					1.40444046572287
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65151",
+			"properties": {
+				"number": "65151",
+				"services": [
+					"3",
+					"62",
+					"83",
+					"136",
+					"62A",
+					"6N"
+				],
+				"name": "Cove Stn Exit B"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90662105241732,
+					1.39885650320272
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65159",
+			"properties": {
+				"number": "65159",
+				"services": [
+					"3",
+					"62",
+					"83",
+					"136"
+				],
+				"name": "Cove Stn Exit A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90665292741664,
+					1.39856872266182
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65161",
+			"properties": {
+				"number": "65161",
+				"services": [
+					"3",
+					"62",
+					"83",
+					"381",
+					"62A",
+					"6N"
+				],
+				"name": "Meridian Stn Exit B"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.908681548281,
+					1.39728016859873
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65169",
+			"properties": {
+				"number": "65169",
+				"services": [
+					"3",
+					"62",
+					"83",
+					"381"
+				],
+				"name": "Meridian Stn Exit A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.909235639408,
+					1.3964953313577
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65171",
+			"properties": {
+				"number": "65171",
+				"services": [
+					"3",
+					"62",
+					"83",
+					"381",
+					"386",
+					"62A",
+					"6N"
+				],
+				"name": "Coral Edge Stn Exit B"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91205304613206,
+					1.39452041732154
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65179",
+			"properties": {
+				"number": "65179",
+				"services": [
+					"3",
+					"62",
+					"83",
+					"381"
+				],
+				"name": "Coral Edge Stn Exit A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91190241454986,
+					1.39429582834351
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65181",
+			"properties": {
+				"number": "65181",
+				"services": [
+					"50",
+					"381"
+				],
+				"name": "Atf Punggol Ctrl"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91754694442001,
+					1.39681388886675
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65189",
+			"properties": {
+				"number": "65189",
+				"services": [
+					"50",
+					"381"
+				],
+				"name": "Bef Punggol Ctrl"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91793305556935,
+					1.39682694447407
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65191",
+			"properties": {
+				"number": "65191",
+				"services": [
+					"3",
+					"27",
+					"34",
+					"39",
+					"88",
+					"89",
+					"109",
+					"110",
+					"118",
+					"168",
+					"858",
+					"969",
+					"89e",
+					"118B",
+					"969A"
+				],
+				"name": "Bef Punggol Rd"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90539999997036,
+					1.39527356921611
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65199",
+			"properties": {
+				"number": "65199",
+				"services": [
+					"3",
+					"27",
+					"34",
+					"39",
+					"88",
+					"89",
+					"109",
+					"110",
+					"118",
+					"168",
+					"858",
+					"969",
+					"27A",
+					"34A",
+					"89e",
+					"118A"
+				],
+				"name": "Aft Punggol Rd"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90542736761212,
+					1.39591721161169
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65201",
+			"properties": {
+				"number": "65201",
+				"services": [
+					"62",
+					"82",
+					"62A",
+					"6N"
+				],
+				"name": "Opp Blk 201A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.9035672,
+					1.4008806
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65209",
+			"properties": {
+				"number": "65209",
+				"services": [
+					"62",
+					"82"
+				],
+				"name": "Aft Punggol Rd"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.903935774586,
+					1.40039133010799
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65219",
+			"properties": {
+				"number": "65219",
+				"services": [
+					"6N"
+				],
+				"name": "Aft Punggol Ctrl"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90325880013292,
+					1.40326663804865
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65221",
+			"properties": {
+				"number": "65221",
+				"services": [
+					"3",
+					"34",
+					"83",
+					"84",
+					"85",
+					"136",
+					"381",
+					"386",
+					"34A",
+					"386A"
+				],
+				"name": "BLK 303D"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90480763848863,
+					1.40402842836975
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65229",
+			"properties": {
+				"number": "65229",
+				"services": [
+					"3",
+					"34",
+					"83",
+					"84",
+					"85",
+					"136",
+					"381",
+					"386",
+					"6N"
+				],
+				"name": "Blk 298"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90556931496221,
+					1.40320219454105
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65231",
+			"properties": {
+				"number": "65231",
+				"services": [
+					"3",
+					"50",
+					"83",
+					"85",
+					"381",
+					"386",
+					"6N"
+				],
+				"name": "Riviera Stn Exit B"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91576531457447,
+					1.3942824799683
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65239",
+			"properties": {
+				"number": "65239",
+				"services": [
+					"3",
+					"50",
+					"83",
+					"85",
+					"381"
+				],
+				"name": "Riviera Stn Exit A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91603484855351,
+					1.39410461413829
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65241",
+			"properties": {
+				"number": "65241",
+				"services": [
+					"136",
+					"381"
+				],
+				"name": "Blk 196C"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90767172209786,
+					1.39917246521216
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65249",
+			"properties": {
+				"number": "65249",
+				"services": [
+					"136",
+					"381"
+				],
+				"name": "Blk 178"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90824975943016,
+					1.39963747797366
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65251",
+			"properties": {
+				"number": "65251",
+				"services": [
+					"381"
+				],
+				"name": "Punggol Stn"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90299618971393,
+					1.40502618974463
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65259",
+			"properties": {
+				"number": "65259",
+				"services": [
+					"43",
+					"117",
+					"118",
+					"381",
+					"43M",
+					"43e"
+				],
+				"name": "Punggol Stn/Int"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.9018719,
+					1.405351944
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65261",
+			"properties": {
+				"number": "65261",
+				"services": [
+					"3",
+					"83",
+					"85"
+				],
+				"name": "Blk 649"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91478844205221,
+					1.39695155432601
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65269",
+			"properties": {
+				"number": "65269",
+				"services": [
+					"3",
+					"83",
+					"85",
+					"386",
+					"6N"
+				],
+				"name": "Blk 162B"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91467219472072,
+					1.39671015437474
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65271",
+			"properties": {
+				"number": "65271",
+				"services": [
+					"3",
+					"83",
+					"85"
+				],
+				"name": "Opp Blk 188"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91064287603247,
+					1.39995544080394
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65279",
+			"properties": {
+				"number": "65279",
+				"services": [
+					"3",
+					"83",
+					"85",
+					"6N"
+				],
+				"name": "Bet Blks 187/188"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91103404530959,
+					1.39929726136961
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65281",
+			"properties": {
+				"number": "65281",
+				"services": [
+					"3",
+					"83",
+					"85",
+					"136",
+					"381",
+					"386",
+					"386A"
+				],
+				"name": "Punggol Sec/Blk 601B"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90783309940194,
+					1.40201165055481
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65289",
+			"properties": {
+				"number": "65289",
+				"services": [
+					"3",
+					"83",
+					"85",
+					"136",
+					"381",
+					"386",
+					"6N"
+				],
+				"name": "Opp Punggol Sec/Blk 195E"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90762981656073,
+					1.40173746082241
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65301",
+			"properties": {
+				"number": "65301",
+				"services": [
+					"50"
+				],
+				"name": "Damai Stn Exit B"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.9096331,
+					1.404378889
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65309",
+			"properties": {
+				"number": "65309",
+				"services": [
+					"50"
+				],
+				"name": "Damai Stn Exit A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90913500001737,
+					1.40494388890828
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65311",
+			"properties": {
+				"number": "65311",
+				"services": [
+					"50",
+					"386"
+				],
+				"name": "Oasis Stn Exit B/Blk 617D"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91285694443438,
+					1.40201500002599
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65319",
+			"properties": {
+				"number": "65319",
+				"services": [
+					"50",
+					"386",
+					"386A"
+				],
+				"name": "Oasis Stn Exit A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91244500001986,
+					1.40257805553795
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65321",
+			"properties": {
+				"number": "65321",
+				"services": [
+					"50"
+				],
+				"name": "Kadaloor Stn Exit B"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91659300001999,
+					1.39942700000453
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65329",
+			"properties": {
+				"number": "65329",
+				"services": [
+					"50"
+				],
+				"name": "Kadaloor Stn Exit A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91612399998853,
+					1.39988799999567
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65331",
+			"properties": {
+				"number": "65331",
+				"services": [
+					"119",
+					"381",
+					"382",
+					"382A",
+					"382G"
+				],
+				"name": "Opp Blk 268D"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.89851804993967,
+					1.4028650002354
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65339",
+			"properties": {
+				"number": "65339",
+				"services": [
+					"119",
+					"381",
+					"382",
+					"382W"
+				],
+				"name": "Blk 268C"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.8980438895579,
+					1.4031330662473
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65341",
+			"properties": {
+				"number": "65341",
+				"services": [
+					"119",
+					"381",
+					"382",
+					"382A",
+					"382G"
+				],
+				"name": "Opp Blk 272C"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.9009230492748,
+					1.40194694990354
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65349",
+			"properties": {
+				"number": "65349",
+				"services": [
+					"119",
+					"381",
+					"382",
+					"382W"
+				],
+				"name": "Blk 272C"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90077963354756,
+					1.40222088604884
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65351",
+			"properties": {
+				"number": "65351",
+				"services": [
+					"50",
+					"382",
+					"382G"
+				],
+				"name": "Punggol View Pr Sch"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90472620505594,
+					1.40589404110743
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65359",
+			"properties": {
+				"number": "65359",
+				"services": [
+					"50",
+					"382",
+					"382W"
+				],
+				"name": "Opp Punggol View Pr Sch"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90435300000112,
+					1.40552300002668
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65371",
+			"properties": {
+				"number": "65371",
+				"services": [
+					"386",
+					"386A"
+				],
+				"name": "Blk 682A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91626762051331,
+					1.40288670334271
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65379",
+			"properties": {
+				"number": "65379",
+				"services": [
+					"386"
+				],
+				"name": "Blk 661A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91633762054916,
+					1.40280775893278
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65381",
+			"properties": {
+				"number": "65381",
+				"services": [
+					"386",
+					"386A"
+				],
+				"name": "Punggol Sec Sch"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90976700000783,
+					1.40206799999564
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65389",
+			"properties": {
+				"number": "65389",
+				"services": [
+					"386"
+				],
+				"name": "Opp Punggol Sec Sch"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91007199999862,
+					1.40225699999819
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65391",
+			"properties": {
+				"number": "65391",
+				"services": [
+					"386",
+					"386A"
+				],
+				"name": "Blk 672A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91251694444946,
+					1.40587968028504
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65399",
+			"properties": {
+				"number": "65399",
+				"services": [
+					"386"
+				],
+				"name": "Blk 670A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91259546667418,
+					1.40580472725369
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65401",
+			"properties": {
+				"number": "65401",
+				"services": [
+					"43",
+					"117",
+					"118",
+					"381",
+					"43M",
+					"43e"
+				],
+				"name": "Opp Blk 264A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.89871180015278,
+					1.40653182138609
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65409",
+			"properties": {
+				"number": "65409",
+				"services": [
+					"43",
+					"117",
+					"118",
+					"381",
+					"43M",
+					"43e"
+				],
+				"name": "Bef Blk 264"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.89957451783918,
+					1.40624496856359
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65411",
+			"properties": {
+				"number": "65411",
+				"services": [
+					"386"
+				],
+				"name": "Horizon Pr Sch"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91384912994876,
+					1.39944781445392
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65419",
+			"properties": {
+				"number": "65419",
+				"services": [
+					"386"
+				],
+				"name": "Opp Horizon Pr Sch"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.91395382625832,
+					1.39946209125417
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65429",
+			"properties": {
+				"number": "65429",
+				"services": [
+					"386"
+				],
+				"name": "Greendale Pr Sch"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.9120865,
+					1.3967443
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65431",
+			"properties": {
+				"number": "65431",
+				"services": [
+					"43",
+					"117",
+					"118",
+					"119",
+					"43M",
+					"43e"
+				],
+				"name": "Twin Waterfalls"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.89673562171807,
+					1.40238938083661
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65439",
+			"properties": {
+				"number": "65439",
+				"services": [
+					"43",
+					"117",
+					"118",
+					"119",
+					"43M",
+					"43e"
+				],
+				"name": "Aft TPE"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.89631809709375,
+					1.40172529138051
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65441",
+			"properties": {
+				"number": "65441",
+				"services": [
+					"382",
+					"382G"
+				],
+				"name": "Opp Blk 315B"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.89579264867245,
+					1.40817769231202
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65449",
+			"properties": {
+				"number": "65449",
+				"services": [
+					"382",
+					"382W"
+				],
+				"name": "Blk 315B"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.89593121183572,
+					1.40804081420589
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65451",
+			"properties": {
+				"number": "65451",
+				"services": [
+					"382",
+					"382G"
+				],
+				"name": "Blk 322 CP"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.89759188105812,
+					1.41068999997892
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65459",
+			"properties": {
+				"number": "65459",
+				"services": [
+					"382",
+					"382W"
+				],
+				"name": "Opp Blk 322 CP"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.8977216527095,
+					1.41060953055987
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65461",
+			"properties": {
+				"number": "65461",
+				"services": [
+					"84",
+					"382",
+					"382G"
+				],
+				"name": "Blk 312 CP"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90129988103229,
+					1.40985888889928
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65469",
+			"properties": {
+				"number": "65469",
+				"services": [
+					"84",
+					"382",
+					"382W"
+				],
+				"name": "Blk 310B"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90097793657458,
+					1.40982305558831
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65481",
+			"properties": {
+				"number": "65481",
+				"services": [
+					"84",
+					"382",
+					"382G"
+				],
+				"name": "Bef Punggol Dr"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90603964310132,
+					1.40886523796853
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65489",
+			"properties": {
+				"number": "65489",
+				"services": [
+					"84",
+					"382",
+					"382W"
+				],
+				"name": "Aft Punggol Dr"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90566900789092,
+					1.40819500002156
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65491",
+			"properties": {
+				"number": "65491",
+				"services": [
+					"382",
+					"382G"
+				],
+				"name": "Opp Blk 259 CP"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.89496045471951,
+					1.40456320178872
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65499",
+			"properties": {
+				"number": "65499",
+				"services": [
+					"382",
+					"382W"
+				],
+				"name": "Blk 259 CP"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.89497063575236,
+					1.40455142766372
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65521",
+			"properties": {
+				"number": "65521",
+				"services": [
+					"50",
+					"62",
+					"85"
+				],
+				"name": "Waterwoods"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.912942666667,
+					1.39031766666667
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65529",
+			"properties": {
+				"number": "65529",
+				"services": [
+					"50",
+					"62",
+					"85",
+					"62A"
+				],
+				"name": "Aft Punggol Field"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.914053424106,
+					1.39152755882281
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65531",
+			"properties": {
+				"number": "65531",
+				"services": [
+					"382",
+					"382A",
+					"382G"
+				],
+				"name": "Blk 226A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.8936,
+					1.4024
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65539",
+			"properties": {
+				"number": "65539",
+				"services": [
+					"382",
+					"382W"
+				],
+				"name": "Blk 224A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.8937,
+					1.402291
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65541",
+			"properties": {
+				"number": "65541",
+				"services": [
+					"382",
+					"382A",
+					"382G"
+				],
+				"name": "Before Sumang Lane"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.891222856425,
+					1.40356313420576
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65549",
+			"properties": {
+				"number": "65549",
+				"services": [
+					"382",
+					"382W"
+				],
+				"name": "After Sumang Lane"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.89111731884,
+					1.40353483274257
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65551",
+			"properties": {
+				"number": "65551",
+				"services": [
+					"382",
+					"382A",
+					"382G"
+				],
+				"name": "Blk 227A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.8933695,
+					1.40374
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65559",
+			"properties": {
+				"number": "65559",
+				"services": [
+					"382",
+					"382W"
+				],
+				"name": "Opposite Blk 227A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.8924934,
+					1.4040841
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65561",
+			"properties": {
+				"number": "65561",
+				"services": [
+					"381"
+				],
+				"name": "WATERWAY PR SCH"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.919085,
+					1.398808889
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65569",
+			"properties": {
+				"number": "65569",
+				"services": [
+					"381"
+				],
+				"name": "OPP WATERWAY PR SCH"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.9191989,
+					1.398633889
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65571",
+			"properties": {
+				"number": "65571",
+				"services": [
+					"382",
+					"382A"
+				],
+				"name": "BLK 218"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.895535,
+					1.403478611
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65579",
+			"properties": {
+				"number": "65579",
+				"services": [
+					"382"
+				],
+				"name": "BLK 258A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.8960314,
+					1.403556111
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65611",
+			"properties": {
+				"number": "65611",
+				"services": [
+					"84"
+				],
+				"name": "Nibong Stn Exit B"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.9003025582472,
+					1.41138059190012
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65619",
+			"properties": {
+				"number": "65619",
+				"services": [
+					"84"
+				],
+				"name": "Nibong Stn Exit A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.9000027461105,
+					1.4115376363476
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65621",
+			"properties": {
+				"number": "65621",
+				"services": [
+					"84"
+				],
+				"name": "Samudera Stn Exit B"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90248324948615,
+					1.41608373162688
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65629",
+			"properties": {
+				"number": "65629",
+				"services": [
+					"84"
+				],
+				"name": "Samudera Stn Exit A"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90252132088521,
+					1.41645968650579
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65631",
+			"properties": {
+				"number": "65631",
+				"services": [
+					"84"
+				],
+				"name": "Aft Punggol Pt Stn"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90541762051286,
+					1.41730626833353
+				]
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "65639",
+			"properties": {
+				"number": "65639",
+				"services": [
+					"84"
+				],
+				"name": "Bef Punggol Pt Stn"
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					103.90530849057907,
+					1.41755237944481
+				]
+			}
+		}
+  ]
+}
