@@ -140,4 +140,18 @@ class MapCanvas(Canvas):
         for i in range(len(path) - 1):
             start_x, start_y = self.get_icon_render_pos(path[i].position.longitude, path[i].position.lattitude)
             end_x, end_y = self.get_icon_render_pos(path[i + 1].position.longitude, path[i + 1].position.lattitude)
-            self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="red", width = 1))
+
+            if(path[i].node == path[i+1].node_type):
+                if(path[i].node_type == "bus"):
+                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="purple", width = 1))
+                elif(path[i].node_type == "lrt"):
+                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="blue", width=1))
+                elif(path[i].node_type == "mrt"):
+                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="orange", width=1))
+                elif(path[i].node_type == "hdb"):
+                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="green", width=1))
+                else:
+                    print("Unknow node combination occur: ", path[i].node_type, path[i+1].node_type)
+            else:
+                #Walking colour line
+                self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="red", width=1))
