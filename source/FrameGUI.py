@@ -9,6 +9,8 @@ class FrameGUI(Frame):
     WINDOW_MIN_WIDTH = 700
     WINDOW_MIN_HEIGHT = 300
     ICON_PATH = "images/sit_icon.ico"
+    ENTRY_VALID_COL = "#d0ffc9"
+    ENTRY_INVALID_COL = "White"
 
     def __init__(self, master, application):
         self.application = application
@@ -67,19 +69,13 @@ class FrameGUI(Frame):
         self.start_point_list_scrollbar.grid(row = 0, column = 1, sticky = "ns")
         self.start_point_list.configure(yscrollcommand = self.start_point_list_scrollbar.set)
 
-        #TEMPORARY
+        #Add all nodes to starting listbox
         self.start_point_list.insert(END, "----------LRT----------")
-        for i in range(0, len(self.application.all_nodes)):
-            if self.application.all_nodes[i].node_type == "lrt":
-                self.start_point_list.insert(END, self.application.all_nodes[i].node_name)
+        self.add_nodes_to_listbox(self.application.lrt_nodes, self.start_point_list)
         self.start_point_list.insert(END, "----------BUS----------")
-        for i in range(0, len(self.application.all_nodes)):
-            if self.application.all_nodes[i].node_type == "bus":
-                self.start_point_list.insert(END, self.application.all_nodes[i].node_name)
+        self.add_nodes_to_listbox(self.application.bus_stop_nodes, self.start_point_list)
         self.start_point_list.insert(END, "----------HDB----------")
-        for i in range(0, len(self.application.all_nodes)):
-            if self.application.all_nodes[i].node_type == "hdb":
-                self.start_point_list.insert(END, self.application.all_nodes[i].node_name)
+        self.add_nodes_to_listbox(self.application.hdb_nodes, self.start_point_list)
 
         #End point selection GUI
         self.end_point_label = Label(self.map_control_frame, text = "Select ending point", font = ('Calibri', 9))
@@ -96,19 +92,13 @@ class FrameGUI(Frame):
         self.end_point_list_scrollbar.grid(row = 0, column = 1, sticky = "ns")
         self.end_point_list.configure(yscrollcommand = self.end_point_list_scrollbar.set)
 
-        #TEMPORARY
+        #Add all nodes to ending listbox
         self.end_point_list.insert(END, "----------LRT----------")
-        for i in range(0, len(self.application.all_nodes)):
-            if self.application.all_nodes[i].node_type == "lrt":
-                self.end_point_list.insert(END, self.application.all_nodes[i].node_name)
+        self.add_nodes_to_listbox(self.application.lrt_nodes, self.end_point_list)
         self.end_point_list.insert(END, "----------BUS----------")
-        for i in range(0, len(self.application.all_nodes)):
-            if self.application.all_nodes[i].node_type == "bus":
-                self.end_point_list.insert(END, self.application.all_nodes[i].node_name)
+        self.add_nodes_to_listbox(self.application.bus_stop_nodes, self.end_point_list)
         self.end_point_list.insert(END, "----------HDB----------")
-        for i in range(0, len(self.application.all_nodes)):
-            if self.application.all_nodes[i].node_type == "hdb":
-                self.end_point_list.insert(END, self.application.all_nodes[i].node_name)
+        self.add_nodes_to_listbox(self.application.hdb_nodes, self.end_point_list)
 
         self.map_control_frame.grid_rowconfigure(7, minsize=10)
         self.find_path_button = Button(self.map_control_frame, text = "Find path", command = self.application.find_path)
@@ -223,14 +213,25 @@ class FrameGUI(Frame):
         self.node_info_long["text"] = "Longitude: " + str(node.position.longitude)
 
     def set_start_node(self):
-        self.application.selected_start_node = self.selected_node
         if (self.selected_node):
             self.start_point_entry_text.set(str(self.selected_node.node_name))
+            self.start_point_entry.config({"background": FrameGUI.ENTRY_VALID_COL})
+        self.application.selected_start_node = self.selected_node
 
     def set_end_node(self):
-        self.application.selected_end_node = self.selected_node
         if (self.selected_node):
             self.end_point_entry_text.set(str(self.selected_node.node_name))
+            self.end_point_entry.config({"background": FrameGUI.ENTRY_VALID_COL})
+        self.application.selected_end_node = self.selected_node
+
+    def unset_start_node(self):
+        self.start_point_entry.config({"background": FrameGUI.ENTRY_INVALID_COL})
+        self.application.selected_start_node = None
+        print("UNSET S")
+
+    def unset_end_node(self):
+        self.end_point_entry.config({"background": FrameGUI.ENTRY_INVALID_COL})
+        self.application.selected_end_node = None
 
     def show_lrt_nodes(self):
         self.map_canvas.set_icon_visibility(self.checkbox_lrt_val.get(), "lrt")
@@ -249,59 +250,50 @@ class FrameGUI(Frame):
 
         #TEMPORARY PRINT
         print("start autocomplete")
+        self.unset_start_node()
         usertext = str(sv.get())
         self.start_point_list.delete(0, END)
 
         self.start_point_list.insert(END, "----------LRT----------")
-        for i in range(0, len(self.application.all_nodes)):
-            if  self.application.all_nodes[i].node_type =="lrt":
-                if usertext.lower() in self.application.all_nodes[i].node_name.lower():
-                    self.start_point_list.insert(END, self.application.all_nodes[i].node_name)
+        self.add_names_to_listbox(usertext, self.application.lrt_nodes, self.start_point_list)
         self.start_point_list.insert(END, "----------BUS----------")
-        for i in range(0, len(self.application.all_nodes)):
-            if self.application.all_nodes[i].node_type == "bus":
-                if usertext.lower() in self.application.all_nodes[i].node_name.lower():
-                    self.start_point_list.insert(END, self.application.all_nodes[i].node_name)
+        self.add_names_to_listbox(usertext, self.application.bus_stop_nodes, self.start_point_list)
         self.start_point_list.insert(END, "----------HDB----------")
-        for i in range(0, len(self.application.all_nodes)):
-            if self.application.all_nodes[i].node_type == "hdb":
-                if self.application.all_nodes[i] is not None:
-                    if usertext.lower() in self.application.all_nodes[i].node_name.lower():
-                        self.start_point_list.insert(END, self.application.all_nodes[i].node_name)
+        self.add_names_to_listbox(usertext, self.application.hdb_nodes, self.start_point_list)
 
     def callback_end(self, sv):
         # to iterate across whole list and show in list box what could be related to user thing
 
         #TEMPORARY PRINT
         print("end autocomplete")
-
+        self.unset_end_node()
         usertext = str(sv.get())
         self.end_point_list.delete(0, END)
 
         self.end_point_list.insert(END, "----------LRT----------")
-        for i in range(0, len(self.application.all_nodes)):
-            if self.application.all_nodes[i].node_type == "lrt":
-                if usertext.lower() in self.application.all_nodes[i].node_name.lower():
-                    self.end_point_list.insert(END, self.application.all_nodes[i].node_name)
+        self.add_names_to_listbox(usertext, self.application.lrt_nodes, self.end_point_list)
         self.end_point_list.insert(END, "----------BUS----------")
-        for i in range(0, len(self.application.all_nodes)):
-            if self.application.all_nodes[i].node_type == "hdb":
-                if usertext.lower() in self.application.all_nodes[i].node_name.lower():
-                    self.end_point_list.insert(END, self.application.all_nodes[i].node_name)
+        self.add_names_to_listbox(usertext, self.application.bus_stop_nodes, self.end_point_list)
         self.end_point_list.insert(END, "----------HDB----------")
-        for i in range(0, len(self.application.all_nodes)):
-            if self.application.all_nodes[i].node_type == "hdb":
-                if self.application.all_nodes[i] is not None:
-                    if usertext.lower() in self.application.all_nodes[i].node_name.lower():
-                        self.end_point_list.insert(END, self.application.all_nodes[i].node_name)
+        self.add_names_to_listbox(usertext, self.application.hdb_nodes, self.end_point_list)
 
+    def add_names_to_listbox(self, name, target_list, target_listbox):
+        name = name.lower()
+        for i in range(len(target_list)):
+            if name in target_list[i].node_name.lower():
+                target_listbox.insert(END, target_list[i].node_name)
 
+    def add_nodes_to_listbox(self, target_list, target_listbox):
+        for i in range(len(target_list)):
+            target_listbox.insert(END, target_list[i].node_name)
 
     #gets the selected text in the listbox and searches through the all_nodes array for node with
     #the same node name
     def search_and_set_start_node(self, event):
         index = self.start_point_list.curselection()
         seltext = self.start_point_list.get(index)
+        if (len(seltext) < 0 or seltext[0] == "-"):
+            return
 
         #TEMPORARY FOR TESTING
         print("start find: " + seltext)
@@ -315,10 +307,13 @@ class FrameGUI(Frame):
 
         #assign node as the selected start node
         self.application.selected_start_node = nodestart
+        self.start_point_entry.config({"background": FrameGUI.ENTRY_VALID_COL})
 
     def search_and_set_end_node(self, event):
         index = self.end_point_list.curselection()
         seltext = self.end_point_list.get(index)
+        if (len(seltext) < 0 or seltext[0] == "-"):
+            return
 
         #TEMPORARY FOR TESTING
         print("end find: " + seltext)
@@ -332,3 +327,4 @@ class FrameGUI(Frame):
 
         #assign node as selected end node
         self.application.selected_end_node = nodeend
+        self.end_point_entry.config({"background": FrameGUI.ENTRY_VALID_COL})

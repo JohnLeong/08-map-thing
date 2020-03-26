@@ -16,9 +16,6 @@ class Application():
         self.mrt_nodes = []
         self.hdb_nodes = []
         self.all_nodes = []
-        self.hdbnames = []
-        self.busnames = []
-        self.lrtnames = []
         self.selected_start_node = None
         self.selected_end_node = None
         self.load_map_data()
@@ -36,29 +33,23 @@ class Application():
         #     new_node = MapNode(hdb.name[i], "hdb", hdb.geometry.y[i], hdb.geometry.x[i])
         #     self.hdb_nodes.append(new_node)
         #     self.all_nodes.append(new_node)
-        #     self.hdbnames.append(hdb.name[i])
-        #     print(hdb.name[i], hdb.geometry.y[i], hdb.geometry.x[i], "loaded")
+        #     print(new_node.node_name, new_node.position.lattitude, new_node.position.longitude, "loaded")
 
         # import bus_stop
         bus = geopandas.read_file("map/new_bus.geojson")
-
         for i in range(0, len(bus)):
             new_node = MapNode(bus.name[i], "bus", bus.geometry.y[i], bus.geometry.x[i])
             self.bus_stop_nodes.append(new_node)
             self.all_nodes.append(new_node)
-            self.busnames.append(bus.name[i])
-            print(bus.name[i], bus.geometry.y[i], bus.geometry.x[i], "loaded")
+            print(new_node.node_name, new_node.position.lattitude, new_node.position.longitude, "loaded")
 
         # import lrt
         lrt = geopandas.read_file("map/new_lrt.geojson")
-
         for i in range(0, len(lrt)):
             new_node = MapNode(lrt.name[i], "lrt", lrt.geometry.y[i], lrt.geometry.x[i])
             self.lrt_nodes.append(new_node)
             self.all_nodes.append(new_node)
-            self.lrtnames.append(lrt.name[i])
-            print(lrt.name[i], lrt.geometry.x[i], lrt.geometry.y[i], "loaded")
-
+            print(new_node.node_name, new_node.position.lattitude, new_node.position.longitude, "loaded")
 
         #for sorting the all_nodes array that will be used for BINARY SEARCH
         self.all_nodes.sort(key=lambda x: x.node_name)
@@ -71,10 +62,10 @@ class Application():
 
     def find_path(self):
         if (self.selected_start_node == None):
-            messagebox.showerror("Error finding path", "Please select a start point!")
+            messagebox.showerror("Error finding path", "Please select a valid start point!")
             return
         if (self.selected_end_node == None):
-            messagebox.showerror("Error finding path", "Please select an end point!")
+            messagebox.showerror("Error finding path", "Please select a valid end point!")
             return
         if (self.selected_start_node == self.selected_end_node):
             messagebox.showerror("Error finding path", "Start and end point must be different!")
@@ -82,8 +73,6 @@ class Application():
 
         print("Finding path from '" + str(self.selected_start_node.node_name) + "' to '" + str(self.selected_end_node.node_name) + "'");
         #self.dijkstra(self.selected_start_node, self.selected_end_node)
-
-
 
     #binary search algorithm
     def bin_search_all_nodes(self, selectedtext):
@@ -103,17 +92,3 @@ class Application():
             else:
                 print("found")
                 return n
-
-#distance between start and end node in a straight line
-def distance(latStart,lonStart,latEnd,lonEnd):
-    R = 6373.0 #radius of earth
-    lat1 = math.radians(latStart)
-    lon1 = math.radians(lonStart)
-    lat2 = math.radians(latEnd)
-    lon2 = math.radians(lonEnd)
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-    a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-    distance = R * c
-    return distance
