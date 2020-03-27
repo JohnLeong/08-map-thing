@@ -61,7 +61,7 @@ class MapCanvas(Canvas):
     def on_click(self, event):
         self.move_start(event)
 
-        items = super().find_closest(super().canvasx(event.x), super().canvasy(event.y), halo=5)
+        items = super().find_closest(super().canvasx(event.x), super().canvasy(event.y), halo=1)
         item = items[0]
         if (self.selected_node is not None and item == self.selected_node.map_icon and len(items) > 1):
             item = items[1]
@@ -141,7 +141,7 @@ class MapCanvas(Canvas):
             start_x, start_y = self.get_icon_render_pos(path[i].position.longitude, path[i].position.lattitude)
             end_x, end_y = self.get_icon_render_pos(path[i + 1].position.longitude, path[i + 1].position.lattitude)
 
-            if(path[i].node == path[i+1].node_type):
+            if(path[i].node_type == path[i+1].node_type):
                 if(path[i].node_type == "bus"):
                     self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="purple", width = 1))
                 elif(path[i].node_type == "lrt"):
@@ -151,7 +151,7 @@ class MapCanvas(Canvas):
                 elif(path[i].node_type == "hdb"):
                     self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="green", width=1))
                 else:
-                    print("Unknow node combination occur: ", path[i].node_type, path[i+1].node_type)
+                    print("Unknown node combination: ", path[i].node_type, path[i+1].node_type)
             else:
                 #Walking colour line
-                self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="red", width=1))
+                self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="green", width=1))
