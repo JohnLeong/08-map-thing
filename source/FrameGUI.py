@@ -150,12 +150,12 @@ class FrameGUI(Frame):
         self.path_info_calories = Label(self.path_info_frame, text = "Calories burnt: ", font = ('Calibri', 9))
         self.path_info_calories.grid(row = 7, column = 0, sticky = "w", padx = 10)
 
-        self.node_info_button_frame = Frame(self.path_info_frame)
-        self.node_info_button_frame.grid(row = 8, column = 0, sticky="we", padx = 5)
-        self.node_info_start_button = Button(self.node_info_button_frame, text = "Save as image")
-        self.node_info_start_button.grid(row = 0, column = 0, sticky="we", padx = 5)
-        self.node_info_end_button = Button(self.node_info_button_frame, text = "Save as text")
-        self.node_info_end_button.grid(row = 0, column = 1, sticky="we", padx = 5)
+        self.path_info_button_frame = Frame(self.path_info_frame)
+        self.path_info_button_frame.grid(row = 8, column = 0, sticky="we", padx = 5)
+        self.path_info_clear_button = Button(self.path_info_button_frame, text = "Clear path", command=self.clear_path_info)
+        self.path_info_clear_button.grid(row = 0, column = 0, sticky="we", padx = 5)
+        self.path_info_save_button = Button(self.path_info_button_frame, text = "Save as text")
+        self.path_info_save_button.grid(row = 0, column = 1, sticky="we", padx = 5)
 
         "----------------------------------------------------------------------------------------------------------"
         #Map options
@@ -323,15 +323,26 @@ class FrameGUI(Frame):
         self.application.selected_end_node = nodeend
         self.end_point_entry.config({"background": FrameGUI.ENTRY_VALID_COL})
 
+    def clear_path_info(self):
+        self.map_canvas.clear_path()
+        self.path_info_start["text"] = "Start point: "
+        self.path_info_end["text"] = "End_point: "
+        self.path_info_dist["text"] = "Total distance: "
+        self.path_info_walk_dist["text"] = "Walking distance: "
+        self.path_info_bus_dist["text"] = "Bus distance: "
+        self.path_info_mrt_dist["text"] = "MRT/LRT distance: "
+        self.path_info_travel_cost["text"] = "Travel costs: "
+        self.path_info_calories["text"] = "Calories burnt: "
+
     def display_path_info(self, path):
         total_dist, walking_dist, bus_dist, lrt_dist = app.Application.find_path_distance(path)
-        self.path_info_start["text"] = path[0].node_name
-        self.path_info_end["text"] = path[-1].node_name
+        self.path_info_start["text"] = "Start point: " + path[0].node_name
+        self.path_info_end["text"] = "End_point: " + path[-1].node_name
 
-        self.path_info_dist["text"] = "Total distance: " + str(total_dist)
-        self.path_info_walk_dist["text"] = "Walking distance: " + str(walking_dist)
-        self.path_info_bus_dist["text"] = "Bus distance: " + str(bus_dist)
-        self.path_info_mrt_dist["text"] = "MRT/LRT distance: " + str(lrt_dist)
+        self.path_info_dist["text"] = "Total distance: " + str(round(total_dist, 3)) + "km"
+        self.path_info_walk_dist["text"] = "Walking distance: " + str(round(walking_dist, 3)) + "km"
+        self.path_info_bus_dist["text"] = "Bus distance: " + str(round(bus_dist, 3)) + "km"
+        self.path_info_mrt_dist["text"] = "MRT/LRT distance: " + str(round(lrt_dist, 3)) + "km"
 
         ## TODO: Calculate travel costs based on distance
         # TODO: Calculate calories burnt from walking

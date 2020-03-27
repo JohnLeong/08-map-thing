@@ -13,6 +13,7 @@ class MapCanvas(Canvas):
     NODE_COL_MRT = "#fcba03"
     NODE_COL_BUS = "#ba03fc"
     NODE_COL_HDB = "#30de2a"
+    PATH_WIDTH = 1
 
     def __init__(self, master, application, frame_gui, size_x, size_y):
         Canvas.__init__(self, master, width = size_x, height = size_y, background = MapCanvas.BACKGROUND_COLOR)
@@ -127,15 +128,20 @@ class MapCanvas(Canvas):
         render_x = render_x * MapCanvas.MAP_SIZE_X
         render_y = render_y * MapCanvas.MAP_SIZE_Y
         return render_x, -render_y
+
+    def clear_path(self):
+        #Clear previous path
+        for i in range(len(self.path_lines) - 1, -1, -1):
+            super().delete(self.path_lines[i])
+
     def display_path(self, path: list):
         """Displays a path on the map
 
         Parameters:
         path:    A list of mapnodes which form the path
         """
-        #Clear previous path
-        for i in range(len(self.path_lines) - 1, -1, -1):
-            super().delete(self.path_lines[i])
+        self.clear_path()
+
         #Render new path
         for i in range(len(path) - 1):
             start_x, start_y = self.get_icon_render_pos(path[i].position.longitude, path[i].position.lattitude)
@@ -143,15 +149,15 @@ class MapCanvas(Canvas):
 
             if(path[i].node_type == path[i+1].node_type):
                 if(path[i].node_type == "bus"):
-                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="purple", width = 1))
+                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="purple", width=MapCanvas.PATH_WIDTH))
                 elif(path[i].node_type == "lrt"):
-                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="blue", width=1))
+                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="blue", width=MapCanvas.PATH_WIDTH))
                 elif(path[i].node_type == "mrt"):
-                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="orange", width=1))
+                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="orange", width=MapCanvas.PATH_WIDTH))
                 elif(path[i].node_type == "hdb"):
-                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="green", width=1))
+                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="green", width=MapCanvas.PATH_WIDTH))
                 else:
                     print("Unknown node combination: ", path[i].node_type, path[i+1].node_type)
             else:
                 #Walking colour line
-                self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="green", width=1))
+                self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="green", width=MapCanvas.PATH_WIDTH))

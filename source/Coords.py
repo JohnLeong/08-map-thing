@@ -20,7 +20,7 @@ class Coords():
         Parameters:
         other(Coords) :    The other Coord
         """
-        return ((self.lattitude - other.lattitude) ** 2, (self.longitude - other.longitude) ** 2)
+        return ((self.lattitude - other.lattitude) ** 2 + (self.longitude - other.longitude) ** 2)
 
     def real_distance_from(self, other):
         """Gets the distance from this Coord to another Coord in terms of meters
