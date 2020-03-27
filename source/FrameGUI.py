@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import filedialog
 from MapCanvas import *
 import Application as app
-
 
 class FrameGUI(Frame):
     WINDOW_TITLE = "1008 Project"
@@ -49,10 +49,17 @@ class FrameGUI(Frame):
         self.left_panel_frame = Frame(self.map_tab)
         self.left_panel_frame.grid(row = 0, column = 0, sticky = "nsew", padx = 10)
 
-        self.map_control_frame = LabelFrame(self.left_panel_frame, text = "Map controls", font = ('Calibri', 9, 'bold'), width = 800)
+        #Scroll canvas
+        self.left_panel_canvas = Canvas(self.left_panel_frame, width = 300, height = 500)
+        self.left_panel_scrollbar = Scrollbar(self.left_panel_frame, orient="vertical", command=self.left_panel_canvas.yview)
+        self.left_panel_inner_frame = Frame(self.left_panel_canvas)
+        self.left_panel_canvas.create_window(0, 0, anchor = 'nw', window = self.left_panel_inner_frame)
+
+        "----------------------------------------------------------------------------------------------------------"
+        self.map_control_frame = LabelFrame(self.left_panel_inner_frame, text = "Map controls", font = ('Calibri', 9, 'bold'), width = 800)
         self.map_control_frame.grid(row = 0, column = 0, sticky = "nws", padx = 10)
         self.map_control_frame.grid_rowconfigure(0, minsize=5) #For padding at the top
-        self.map_control_frame.grid_columnconfigure(0, minsize=255) #For padding at the top
+        self.map_control_frame.grid_columnconfigure(0, minsize=255)
 
         #Start point selection GUI
         self.start_point_label = Label(self.map_control_frame, text = "Select starting point", font = ('Calibri', 9))
@@ -62,7 +69,7 @@ class FrameGUI(Frame):
         self.start_point_entry.grid(row = 2, column = 0, sticky="we", padx = 10)
         self.start_point_list_frame = Frame(self.map_control_frame)
         self.start_point_list_frame.grid(row = 3, column = 0, sticky="we", padx = 10)
-        self.start_point_list = Listbox(self.start_point_list_frame, width = 40, height = 4, font = ('Calibri', 9))
+        self.start_point_list = Listbox(self.start_point_list_frame, width = 40, height = 6, font = ('Calibri', 9))
         self.start_point_list.grid(row = 0, column = 0, sticky="we")
         self.start_point_list_scrollbar = ttk.Scrollbar(self.start_point_list_frame, orient = VERTICAL)
         self.start_point_list_scrollbar.configure(command = self.start_point_list.yview)
@@ -70,12 +77,12 @@ class FrameGUI(Frame):
         self.start_point_list.configure(yscrollcommand = self.start_point_list_scrollbar.set)
 
         #Add all nodes to starting listbox
-        self.start_point_list.insert(END, "----------LRT----------")
+        self.start_point_list.insert(END, "--------MRT/LRT--------")
         self.add_nodes_to_listbox(self.application.lrt_nodes, self.start_point_list)
-        self.start_point_list.insert(END, "----------BUS----------")
-        self.add_nodes_to_listbox(self.application.bus_stop_nodes, self.start_point_list)
-        self.start_point_list.insert(END, "----------HDB----------")
-        self.add_nodes_to_listbox(self.application.hdb_nodes, self.start_point_list)
+        # self.start_point_list.insert(END, "----------BUS----------")
+        # self.add_nodes_to_listbox(self.application.bus_stop_nodes, self.start_point_list)
+        # self.start_point_list.insert(END, "----------HDB----------")
+        # self.add_nodes_to_listbox(self.application.hdb_nodes, self.start_point_list)
 
         #End point selection GUI
         self.end_point_label = Label(self.map_control_frame, text = "Select ending point", font = ('Calibri', 9))
@@ -85,7 +92,7 @@ class FrameGUI(Frame):
         self.end_point_entry.grid(row = 5, column = 0, sticky="we", padx = 10)
         self.end_point_list_frame = Frame(self.map_control_frame)
         self.end_point_list_frame.grid(row = 6, column = 0, sticky="we", padx = 10)
-        self.end_point_list = Listbox(self.end_point_list_frame, width = 40, height = 4, font = ('Calibri', 9))
+        self.end_point_list = Listbox(self.end_point_list_frame, width = 40, height = 6, font = ('Calibri', 9))
         self.end_point_list.grid(row = 0, column = 0, sticky="we")
         self.end_point_list_scrollbar = ttk.Scrollbar(self.end_point_list_frame, orient = VERTICAL)
         self.end_point_list_scrollbar.configure(command = self.end_point_list.yview)
@@ -93,20 +100,26 @@ class FrameGUI(Frame):
         self.end_point_list.configure(yscrollcommand = self.end_point_list_scrollbar.set)
 
         #Add all nodes to ending listbox
-        self.end_point_list.insert(END, "----------LRT----------")
+        self.end_point_list.insert(END, "--------MRT/LRT--------")
         self.add_nodes_to_listbox(self.application.lrt_nodes, self.end_point_list)
         self.end_point_list.insert(END, "----------BUS----------")
         self.add_nodes_to_listbox(self.application.bus_stop_nodes, self.end_point_list)
         self.end_point_list.insert(END, "----------HDB----------")
         self.add_nodes_to_listbox(self.application.hdb_nodes, self.end_point_list)
 
-        self.map_control_frame.grid_rowconfigure(7, minsize=10)
+        self.path_type_label = Label(self.map_control_frame, text="Preferred path", font = ('Calibri', 9))
+        self.path_type_label.grid(row = 7, column = 0, sticky="w", padx = 10)
+        self.path_type_options = ["Sheltered", "Cheapest", "Fastest"]
+        self.path_type_string = StringVar()
+        self.path_type_string.set(self.path_type_options[0])
+        self.path_type_selection = OptionMenu(self.map_control_frame, self.path_type_string, *self.path_type_options)
+        self.path_type_selection.grid(row = 8, column = 0, sticky="we", padx = 10)
         self.find_path_button = Button(self.map_control_frame, text = "Find path", command = self.application.find_path)
-        self.find_path_button.grid(row = 8, column = 0, sticky="we", padx = 10)
+        self.find_path_button.grid(row = 9, column = 0, sticky="we", padx = 10, pady = 10)
 
         "----------------------------------------------------------------------------------------------------------"
         #Node info
-        self.node_info_frame = LabelFrame(self.left_panel_frame, text = "Node info", font = ('Calibri', 9, 'bold'))
+        self.node_info_frame = LabelFrame(self.left_panel_inner_frame, text = "Node info", font = ('Calibri', 9, 'bold'))
         self.node_info_frame.grid(row = 1, column = 0, sticky = "nsew", padx = 10)
         self.node_info_frame.grid_rowconfigure(0, minsize=5) #For padding at the top
         self.node_info_frame.grid_columnconfigure(0, minsize=255) #For padding at the top
@@ -129,7 +142,7 @@ class FrameGUI(Frame):
 
         "----------------------------------------------------------------------------------------------------------"
         #Path info
-        self.path_info_frame = LabelFrame(self.left_panel_frame, text = "Path info", font = ('Calibri', 9, 'bold'))
+        self.path_info_frame = LabelFrame(self.left_panel_inner_frame, text = "Path info", font = ('Calibri', 9, 'bold'))
         self.path_info_frame.grid(row = 2, column = 0, sticky = "nwse", padx = 10)
         self.path_info_frame.grid_rowconfigure(0, minsize=5) #For padding at the top
 
@@ -152,37 +165,44 @@ class FrameGUI(Frame):
 
         self.path_info_button_frame = Frame(self.path_info_frame)
         self.path_info_button_frame.grid(row = 8, column = 0, sticky="we", padx = 5)
-        self.path_info_clear_button = Button(self.path_info_button_frame, text = "Clear path", command=self.clear_path_info)
+        self.path_info_clear_button = Button(self.path_info_button_frame, text = "Clear path", command=self.application.clear_path_info)
         self.path_info_clear_button.grid(row = 0, column = 0, sticky="we", padx = 5)
-        self.path_info_save_button = Button(self.path_info_button_frame, text = "Save as text")
+        self.path_info_save_button = Button(self.path_info_button_frame, text = "Save path info", command=self.save_path_info)
         self.path_info_save_button.grid(row = 0, column = 1, sticky="we", padx = 5)
+        self.path_info_load_button = Button(self.path_info_button_frame, text = "Load path info", command=self.load_path_info)
+        self.path_info_load_button.grid(row = 0, column = 2, sticky="we", padx = 5)
 
         "----------------------------------------------------------------------------------------------------------"
         #Map options
-        self.map_options_frame = LabelFrame(self.left_panel_frame, text = "Map options", font = ('Calibri', 9, 'bold'), width = 800)
+        self.map_options_frame = LabelFrame(self.left_panel_inner_frame, text = "Map options", font = ('Calibri', 9, 'bold'), width = 800)
         self.map_options_frame.grid(row = 3, column = 0, sticky = "nwse", padx = 10)
         self.map_options_frame.grid_rowconfigure(0, minsize=5) #For padding at the top
 
         #Start point selection GUI
         self.checkbox_lrt_val = IntVar()
-        self.checkbox_lrt = Checkbutton(self.map_options_frame, text = "LRT nodes", variable = self.checkbox_lrt_val, command = self.show_lrt_nodes)
+        self.checkbox_lrt = Checkbutton(self.map_options_frame, text = "LRT/MRT nodes", variable = self.checkbox_lrt_val, command = self.show_lrt_nodes)
         self.checkbox_lrt.grid(row = 0, column = 0, sticky = "w")
         self.checkbox_lrt.select()
         self.checkbox_mrt_val = IntVar()
-        self.checkbox_mrt = Checkbutton(self.map_options_frame, text = "MRT nodes", variable = self.checkbox_mrt_val, command = self.show_mrt_nodes)
-        self.checkbox_mrt.grid(row = 0, column = 1, sticky = "w")
-        self.checkbox_mrt.select()
+        # self.checkbox_mrt = Checkbutton(self.map_options_frame, text = "MRT nodes", variable = self.checkbox_mrt_val, command = self.show_mrt_nodes)
+        # self.checkbox_mrt.grid(row = 0, column = 1, sticky = "w")
+        # self.checkbox_mrt.select()
         self.checkbox_bus_val = IntVar()
         self.checkbox_bus = Checkbutton(self.map_options_frame, text = "Bus nodes", variable = self.checkbox_bus_val, command = self.show_bus_nodes)
-        self.checkbox_bus.grid(row = 1, column = 0, sticky = "w")
+        self.checkbox_bus.grid(row = 0, column = 1, sticky = "w")
         self.checkbox_bus.select()
         self.checkbox_hdb_val = IntVar()
         self.checkbox_hdb = Checkbutton(self.map_options_frame, text = "HDB nodes", variable = self.checkbox_hdb_val, command = self.show_hdb_nodes)
-        self.checkbox_hdb.grid(row = 1, column = 1, sticky = "w")
+        self.checkbox_hdb.grid(row = 1, column = 0, sticky = "w")
         self.checkbox_hdb.select()
+
+        self.left_panel_canvas.update_idletasks()
+        self.left_panel_canvas.configure(scrollregion = self.left_panel_canvas.bbox('all'), yscrollcommand = self.left_panel_scrollbar.set)
+        self.left_panel_canvas.grid(row = 0, column = 0, sticky = "nsew")
+        self.left_panel_scrollbar.grid(row = 0, column = 1, sticky = "ns")
         "----------------------------------------------------------------------------------------------------------"
         #Map canvas
-        self.map_canvas = MapCanvas(self.map_tab, self.application, self, 800, 650)
+        self.map_canvas = MapCanvas(self.map_tab, self.application, self, 600, 500)
         self.map_canvas.grid(row = 0, column = 1, sticky = "w")
         "----------------------------------------------------------------------------------------------------------"
         #Credits tab, tab02
@@ -236,8 +256,6 @@ class FrameGUI(Frame):
     def show_bus_nodes(self):
         self.map_canvas.set_icon_visibility(self.checkbox_bus_val.get(), "bus")
 
-
-
     # callback functions that will be called when start and end node textboxes(Entry) are updated
     def callback_start(self, sv):
         #to iterate across the whole list to search for what user has keyed in
@@ -250,10 +268,10 @@ class FrameGUI(Frame):
 
         self.start_point_list.insert(END, "----------LRT----------")
         self.add_names_to_listbox(usertext, self.application.lrt_nodes, self.start_point_list)
-        self.start_point_list.insert(END, "----------BUS----------")
-        self.add_names_to_listbox(usertext, self.application.bus_stop_nodes, self.start_point_list)
-        self.start_point_list.insert(END, "----------HDB----------")
-        self.add_names_to_listbox(usertext, self.application.hdb_nodes, self.start_point_list)
+        # self.start_point_list.insert(END, "----------BUS----------")
+        # self.add_names_to_listbox(usertext, self.application.bus_stop_nodes, self.start_point_list)
+        # self.start_point_list.insert(END, "----------HDB----------")
+        # self.add_names_to_listbox(usertext, self.application.hdb_nodes, self.start_point_list)
 
     def callback_end(self, sv):
         # to iterate across whole list and show in list box what could be related to user thing
@@ -323,6 +341,21 @@ class FrameGUI(Frame):
         self.application.selected_end_node = nodeend
         self.end_point_entry.config({"background": FrameGUI.ENTRY_VALID_COL})
 
+    def save_path_info(self):
+        file_path = filedialog.asksaveasfilename(initialdir = "/", title = "Save as", defaultextension=".txt", filetypes = (("Path info files","*.txt"),("all files","*.*")))
+        if(len(file_path) < 1):
+            messagebox.showerror("Invalid file path", "File not saved")
+        else:
+            result = self.application.save_path_info(file_path)
+
+
+    def load_path_info(self):
+        file_path = filedialog.askopenfilename(initialdir = "/", title = "Select file", filetypes = (("Path info files","*.txt"),("all files","*.*")))
+        if(len(file_path) < 1):
+            messagebox.showerror("Invalid file path", "File not loaded")
+        else:
+            self.application.load_path_info(file_path)
+
     def clear_path_info(self):
         self.map_canvas.clear_path()
         self.path_info_start["text"] = "Start point: "
@@ -337,7 +370,7 @@ class FrameGUI(Frame):
     def display_path_info(self, path):
         total_dist, walking_dist, bus_dist, lrt_dist = app.Application.find_path_distance(path)
         self.path_info_start["text"] = "Start point: " + path[0].node_name
-        self.path_info_end["text"] = "End_point: " + path[-1].node_name
+        self.path_info_end["text"] = "End point: " + path[-1].node_name
 
         self.path_info_dist["text"] = "Total distance: " + str(round(total_dist, 3)) + "km"
         self.path_info_walk_dist["text"] = "Walking distance: " + str(round(walking_dist, 3)) + "km"

@@ -13,5 +13,4 @@ class MapNode():
     def reset_pathfinding_data(self):
         self.g = 0      #Distance from start
         self.h = 0      #Distance to end
-        self.f = 0;     #f = g + h, total cost
         self.parent = None

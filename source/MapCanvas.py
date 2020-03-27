@@ -161,3 +161,5 @@ class MapCanvas(Canvas):
             else:
                 #Walking colour line
                 self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="green", width=MapCanvas.PATH_WIDTH))
+        for line in self.path_lines:
+            super().tag_lower(line, 2)

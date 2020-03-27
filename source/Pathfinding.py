@@ -19,7 +19,7 @@ class Pathfinding():
             for item in open_dict.values():
                 if (lowest == False):
                     lowest = item
-                elif (item.f < lowest.f):
+                elif (item.g + item.h < lowest.g + lowest.h and item.h < lowest.h):
                     lowest = item
             current_node = lowest
             open_dict.pop(lowest.node_id)
@@ -29,14 +29,13 @@ class Pathfinding():
             closed_dict[current_node.node_id] = current_node
 
             if (current_node == end_node):
-                print("Astart path found")
                 path = []
                 cur = end_node
                 while(cur != start_node):
                     path.append(cur)
                     cur = cur.parent
                 path.append(start_node)
-                return path
+                return path[::-1]
 
             #Get all connections to current node
             for i in range(len(current_node.connections)):
@@ -50,13 +49,12 @@ class Pathfinding():
                 new_cost_to_neighbor = current_node.g + weight
                 if (new_cost_to_neighbor < neighbor.g or neighbor.node_id not in open_dict):
                     neighbor.g = new_cost_to_neighbor
-                    neighbor.h = neighbor.position.distance_from_sqr(end_node.position)
+                    neighbor.h = neighbor.position.real_distance_from(end_node.position)
                     neighbor.parent = current_node
 
                     if (neighbor.node_id not in open_dict):
                         open_dict[neighbor.node_id] = neighbor
 
-        print("Path not found")
         return []
 
     @staticmethod
