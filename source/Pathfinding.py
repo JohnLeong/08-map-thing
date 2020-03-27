@@ -1,8 +1,9 @@
 import math
+from LLRBT import *
 
 class Pathfinding():
     @staticmethod
-    def find_path_astar(start_node, end_node):
+    def find_path_astar(start_node, end_node, ignore_buses=False):
         open_dict = {}
         closed_dict = {}
 
@@ -43,9 +44,14 @@ class Pathfinding():
                 directed_edge = current_node.connections[i]
                 weight = directed_edge[1]
                 neighbor = directed_edge[0]
+                #Skip if node is already in the closed set
                 if (neighbor.node_id in closed_dict):
                     continue
+                #Skip if ignore_buses is true and this directed edge is a bus service
+                if (ignore_buses and len(directed_edge) > 2):
+                    continue
 
+                #Get the total combined path cost from start to neighbor
                 new_cost_to_neighbor = current_node.g + weight
                 if (new_cost_to_neighbor < neighbor.g or neighbor.node_id not in open_dict):
                     neighbor.g = new_cost_to_neighbor

@@ -14,6 +14,10 @@ class MapCanvas(Canvas):
     NODE_COL_BUS = "#ba03fc"
     NODE_COL_HDB = "#30de2a"
     PATH_WIDTH = 1
+    BUS_PATH_COL = "purple"
+    LRT_PATH_COL = "blue"
+    MRT_PATH_COL = "orange"
+    WALK_PATH_COL = "green"
 
     def __init__(self, master, application, frame_gui, size_x, size_y):
         Canvas.__init__(self, master, width = size_x, height = size_y, background = MapCanvas.BACKGROUND_COLOR)
@@ -129,6 +133,11 @@ class MapCanvas(Canvas):
         render_y = render_y * MapCanvas.MAP_SIZE_Y
         return render_x, -render_y
 
+    def get_text_render_pos(self, x1, y1, x2, y2):
+        x = (x1 + x2) / 2
+        y = (y1 + y2) / 2
+        return self.get_icon_render_pos(x, y)
+
     def clear_path(self):
         #Clear previous path
         for i in range(len(self.path_lines) - 1, -1, -1):
@@ -146,20 +155,36 @@ class MapCanvas(Canvas):
         for i in range(len(path) - 1):
             start_x, start_y = self.get_icon_render_pos(path[i].position.longitude, path[i].position.lattitude)
             end_x, end_y = self.get_icon_render_pos(path[i + 1].position.longitude, path[i + 1].position.lattitude)
+            text_x, text_y = self.get_text_render_pos(path[i].position.longitude, path[i].position.lattitude, path[i + 1].position.longitude, path[i + 1].position.lattitude)
 
+            #Get distance and convert to meters
+            dist = int(path[i].position.real_distance_from(path[i + 1].position) * 1000)
+            line_text = str(dist) + "m"
             if(path[i].node_type == path[i+1].node_type):
                 if(path[i].node_type == "bus"):
-                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="purple", width=MapCanvas.PATH_WIDTH))
+                    bus_service = -1
+                    for c in path[i].connections:
+                        if (c[0].node_id == path[i + 1].node_id):
+                            if (len(c) > 2):
+                                bus_service = c[2]
+                                break
+                    if (bus_service != -1):
+                        self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill=MapCanvas.BUS_PATH_COL, width=MapCanvas.PATH_WIDTH))
+                        line_text += "\nBus " + bus_service
+                    else:
+                        self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill=MapCanvas.WALK_PATH_COL, width=MapCanvas.PATH_WIDTH))
                 elif(path[i].node_type == "lrt"):
-                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="blue", width=MapCanvas.PATH_WIDTH))
+                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill=MapCanvas.LRT_PATH_COL, width=MapCanvas.PATH_WIDTH))
                 elif(path[i].node_type == "mrt"):
-                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="orange", width=MapCanvas.PATH_WIDTH))
+                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill=MapCanvas.MRT_PATH_COL, width=MapCanvas.PATH_WIDTH))
                 elif(path[i].node_type == "hdb"):
-                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="green", width=MapCanvas.PATH_WIDTH))
+                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill=MapCanvas.WALK_PATH_COL, width=MapCanvas.PATH_WIDTH))
                 else:
+                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill=MapCanvas.WALK_PATH_COL, width=MapCanvas.PATH_WIDTH))
                     print("Unknown node combination: ", path[i].node_type, path[i+1].node_type)
             else:
                 #Walking colour line
-                self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill="green", width=MapCanvas.PATH_WIDTH))
+                self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill=MapCanvas.WALK_PATH_COL, width=MapCanvas.PATH_WIDTH))
+            self.path_lines.append(super().create_text(text_x, text_y, text=line_text, font = ('Calibri', 10)))
         for line in self.path_lines:
             super().tag_lower(line, 2)

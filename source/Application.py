@@ -15,6 +15,8 @@ class Application():
     BUS_STOP_FILE_PATH = "map/BusStop.geojson"
     BUS_SERVICES_FILE_PATH = "map/BusServiceRoute.json"
     LRT_FILE_PATH = "map/new_lrt.geojson"
+    SHELTER_DIST_THRESHOLD = 0.0000058
+    SHELTER_DIST_MODIFIER = 500000.2
 
     def __init__(self):
         # Initialise map data
@@ -108,14 +110,15 @@ class Application():
                 if(node.node_id == other.node_id):
                     continue
                 dist = node.position.distance_from_sqr(other.position)
-                if(dist > 0.0000058):
+                if(dist > Application.SHELTER_DIST_THRESHOLD):
                     pass
                     #node.connections.append((other, dist * 1000.0))
                 else:
-                    node.connections.append((other, dist * 1.2))
+                    node.connections.append((other, dist * Application.SHELTER_DIST_MODIFIER))
 
 
-    def find_path(self):
+    def find_path(self, preferred):
+        print(preferred)
         if (self.selected_start_node == None):
             messagebox.showerror("Error finding path", "Please select a valid start point!")
             return
@@ -127,8 +130,11 @@ class Application():
             return
 
         print("Finding path from '" + str(self.selected_start_node.node_name) + "' to '" + str(self.selected_end_node.node_name) + "'");
-        self.path = Pathfinding.find_path_astar(self.selected_start_node, self.selected_end_node)
+        self.path = Pathfinding.find_path_astar(self.selected_start_node, self.selected_end_node, ignore_buses=False if preferred != "Cheapest" else True)
         print("Astart path of length " + str(len(self.path)) + " found")
+
+        # for p in self.path:
+        #     print(p.node_name, p.node_id)
         if (len(self.path) > 0):
             self.gui.display_path_info(self.path)
             self.gui.map_canvas.display_path(self.path)
@@ -189,7 +195,16 @@ class Application():
             total_dist += dist_to_next
             if (path[i].node_type == path[i + 1].node_type):
                 if (path[i].node_type == "bus"):
-                    bus_dist += dist_to_next
+                    connection_found = False
+                    for c in path[i].connections:
+                        if (c[0].node_id == path[i + 1].node_id):
+                            if (len(c) > 2):
+                                connection_found = True
+                                break
+                    if (connection_found):
+                        bus_dist += dist_to_next
+                    else:
+                        walking_dist += dist_to_next
                 elif(path[i].node_type == "hdb"):
                     walking_dist += dist_to_next
                 else:

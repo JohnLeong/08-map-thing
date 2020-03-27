@@ -109,12 +109,12 @@ class FrameGUI(Frame):
 
         self.path_type_label = Label(self.map_control_frame, text="Preferred path", font = ('Calibri', 9))
         self.path_type_label.grid(row = 7, column = 0, sticky="w", padx = 10)
-        self.path_type_options = ["Sheltered", "Cheapest", "Fastest"]
+        self.path_type_options = ["Sheltered/Fastest", "Cheapest"]
         self.path_type_string = StringVar()
         self.path_type_string.set(self.path_type_options[0])
         self.path_type_selection = OptionMenu(self.map_control_frame, self.path_type_string, *self.path_type_options)
         self.path_type_selection.grid(row = 8, column = 0, sticky="we", padx = 10)
-        self.find_path_button = Button(self.map_control_frame, text = "Find path", command = self.application.find_path)
+        self.find_path_button = Button(self.map_control_frame, text = "Find path", command = lambda: self.application.find_path(self.path_type_string.get()))
         self.find_path_button.grid(row = 9, column = 0, sticky="we", padx = 10, pady = 10)
 
         "----------------------------------------------------------------------------------------------------------"
