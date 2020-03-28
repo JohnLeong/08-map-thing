@@ -31,10 +31,11 @@ class MapCanvas(Canvas):
         self.create_map()
 
     def create_map(self):
+        """ Creates the entire map canvas GUI
+        """
         #Bind the mouse events to allow the dragging of map
         self.bind("<ButtonPress-1>", self.on_click)
         self.bind("<B1-Motion>", self.move_move)
-        self.bind("<Motion>", self.on_move)
 
         #Create the map background image
         self.img = PhotoImage(file = MapCanvas.MAP_IMAGE_PATH)
@@ -48,22 +49,27 @@ class MapCanvas(Canvas):
         self.create_all_map_icons()
 
     def move_start(self, event):
-        """Sets the start point of the map canvas move
+        """ Sets the start point of the map canvas move
 
         Parameters:
-        event (?):    The mouse click event
+        event (?):    The mouse event
         """
         super().scan_mark(event.x, event.y)
 
     def move_move(self, event):
-        """Moves the map canvas view to the position the mouse is dragged to
+        """ Moves the map canvas view to the position the mouse is dragged to
 
         Parameters:
-        event (?):    The mouse click event
+        event (?):    The mouse event
         """
         super().scan_dragto(event.x, event.y, gain=1)
 
     def on_click(self, event):
+        """ Check if the user has clicked on a node
+
+        Parameters:
+        event (?):    The mouse click event
+        """
         self.move_start(event)
 
         items = super().find_closest(super().canvasx(event.x), super().canvasy(event.y), halo=1)
@@ -85,10 +91,9 @@ class MapCanvas(Canvas):
         self.selected_node = new_selected_node
         super().tag_raise(new_selected_node)
 
-    def on_move(self, event):
-        pass
-
     def create_all_map_icons(self):
+        """ Goes through all the lists of nodes and renders them as icons onto the map GUI
+        """
         for item in self.application.lrt_nodes:
             render_x, render_y = self.get_icon_render_pos(item.position.longitude, item.position.lattitude)
             item.map_icon = super().create_rectangle(render_x, render_y, render_x + MapCanvas.NODE_SIZE, render_y + MapCanvas.NODE_SIZE, fill=MapCanvas.NODE_COL_LRT, activeoutline="yellow", tags="node")
@@ -107,6 +112,12 @@ class MapCanvas(Canvas):
             self.node_icons[item.map_icon] = item
 
     def set_icon_visibility(self, viewable = True, target = "all"):
+        """ Sets the visibility of the target list of icons
+
+        Parameters:
+        viewable:       Whether the icons should be visible
+        target:         The target list of icons
+        """
         target_list = None
         if (target == "all"):
             target_list = self.application.all_nodes
@@ -127,6 +138,12 @@ class MapCanvas(Canvas):
             super().itemconfigure(item.map_icon, state = visibility)
 
     def get_icon_render_pos(self, x, y):
+        """ Converts a lattitude and longitude to coordinates to be rendered onto the map GUI
+
+        Parameters:
+        x:              The longitude
+        y:              The lattitude
+        """
         render_x = (x - MapCanvas.MAP_BOUNDS_X[0]) / (MapCanvas.MAP_BOUNDS_X[1] - MapCanvas.MAP_BOUNDS_X[0])
         render_y = (y - MapCanvas.MAP_BOUNDS_Y[0]) / (MapCanvas.MAP_BOUNDS_Y[1] - MapCanvas.MAP_BOUNDS_Y[0])
         render_x = render_x * MapCanvas.MAP_SIZE_X
@@ -134,11 +151,21 @@ class MapCanvas(Canvas):
         return render_x, -render_y
 
     def get_text_render_pos(self, x1, y1, x2, y2):
+        """ Gets a position between 2 longitudes and lattitudes to bee rendered onto the map GUI
+
+        Parameters:
+        x1:              The longitude1
+        y1:              The lattitude1
+        x2:              The longitude2
+        y2:              The lattitude2
+        """
         x = (x1 + x2) / 2
         y = (y1 + y2) / 2
         return self.get_icon_render_pos(x, y)
 
     def clear_path(self):
+        """ Clears any previously rendered paths on the GUI
+        """
         #Clear previous path
         for i in range(len(self.path_lines) - 1, -1, -1):
             super().delete(self.path_lines[i])

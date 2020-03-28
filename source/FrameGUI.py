@@ -6,12 +6,12 @@ import Application as app
 import Strings
 
 class FrameGUI(Frame):
-    WINDOW_TITLE = "1008 Project"
-    WINDOW_MIN_WIDTH = 700
-    WINDOW_MIN_HEIGHT = 300
-    ICON_PATH = "images/sit_icon.ico"
-    ENTRY_VALID_COL = "#d0ffc9"
-    ENTRY_INVALID_COL = "White"
+    WINDOW_TITLE = "1008 Project"           #The text to display in the window title
+    WINDOW_MIN_WIDTH = 700                  #The minimum width of the window
+    WINDOW_MIN_HEIGHT = 300                 #The minimum height of the window
+    ICON_PATH = "images/sit_icon.ico"       #The file path of the image used as the window icon
+    ENTRY_VALID_COL = "#d0ffc9"             #The color for the entry GUI element when it is valid
+    ENTRY_INVALID_COL = "White"             #The color for the entry GUI element when it is invalid
 
     def __init__(self, master, application):
         self.application = application
@@ -20,6 +20,11 @@ class FrameGUI(Frame):
         self.create_gui()
 
     def create_window(self, master):
+        """ Creates the tkinter window along with the GUI elements
+
+        Parameters:
+        master:         The root tkinter object
+        """
         Frame.__init__(self, master)
         master.title(FrameGUI.WINDOW_TITLE)
         master.minsize(FrameGUI.WINDOW_MIN_WIDTH, FrameGUI.WINDOW_MIN_HEIGHT)
@@ -29,9 +34,7 @@ class FrameGUI(Frame):
 
     def create_gui(self):
         """ Creates all the GUI to be rendered onto the program window
-            Add new GUI elements here
         """
-
         #Tab controls
         self.tab_control = ttk.Notebook(self)
         self.tab_control.grid(row = 0, column = 0, sticky = "w")
@@ -241,48 +244,65 @@ class FrameGUI(Frame):
         self.end_point_list.bind('<ButtonRelease-1>', self.search_and_set_end_node)
 
     def set_node_info(self, node):
-        self.selected_node = node
+        """ Gets the information from a specified node and displays it on the GUI
 
+        Parameters:
+        node:           The target node
+        """
+        self.selected_node = node
         self.node_info_name["text"] = "Name: " + str(node.node_name)
         self.node_info_type["text"] = "Type: " + str(node.node_type)
         self.node_info_lat["text"] = "Lattitude: " + str(node.position.lattitude)
         self.node_info_long["text"] = "Longitude: " + str(node.position.longitude)
 
     def set_start_node(self):
+        """ Takes the currently selected node and sets it as the start point
+        """
         if (self.selected_node):
             self.start_point_entry_text.set(str(self.selected_node.node_name))
             self.start_point_entry.config({"background": FrameGUI.ENTRY_VALID_COL})
             self.application.selected_start_node = self.selected_node
 
     def set_end_node(self):
+        """ Takes the currently selected node and sets it as the end point
+        """
         if (self.selected_node):
             self.end_point_entry_text.set(str(self.selected_node.node_name))
             self.end_point_entry.config({"background": FrameGUI.ENTRY_VALID_COL})
             self.application.selected_end_node = self.selected_node
 
     def unset_start_node(self):
+        """ Unsets the current start node and clears the start entry box
+        """
         self.start_point_entry.config({"background": FrameGUI.ENTRY_INVALID_COL})
         self.application.selected_start_node = None
 
     def unset_end_node(self):
+        """ Unsets the current end node and clears the end entry box
+        """
         self.end_point_entry.config({"background": FrameGUI.ENTRY_INVALID_COL})
         self.application.selected_end_node = None
 
     def show_lrt_nodes(self):
+        """ Toggles the visibility of the lrt nodes
+        """
         self.map_canvas.set_icon_visibility(self.checkbox_lrt_val.get(), "lrt")
     def show_mrt_nodes(self):
+        """ Toggles the visibility of the mrt nodes
+        """
         self.map_canvas.set_icon_visibility(self.checkbox_mrt_val.get(), "mrt")
     def show_hdb_nodes(self):
+        """ Toggles the visibility of the hdb nodes
+        """
         self.map_canvas.set_icon_visibility(self.checkbox_hdb_val.get(), "hdb")
     def show_bus_nodes(self):
+        """ Toggles the visibility of the bus nodes
+        """
         self.map_canvas.set_icon_visibility(self.checkbox_bus_val.get(), "bus")
 
-    # callback functions that will be called when start and end node textboxes(Entry) are updated
     def callback_start(self, sv):
-        #to iterate across the whole list to search for what user has keyed in
-
-        #TEMPORARY PRINT
-        print("start autocomplete")
+        """ Callback function that will be called when the start textbox(Entry) is updated
+        """
         self.unset_start_node()
         usertext = str(sv.get())
         self.start_point_list.delete(0, END)
@@ -295,10 +315,8 @@ class FrameGUI(Frame):
         # self.add_names_to_listbox(usertext, self.application.hdb_nodes, self.start_point_list)
 
     def callback_end(self, sv):
-        # to iterate across whole list and show in list box what could be related to user thing
-
-        #TEMPORARY PRINT
-        print("end autocomplete")
+        """ Callback function that will be called when the end textbox(Entry) is updated
+        """
         self.unset_end_node()
         usertext = str(sv.get())
         self.end_point_list.delete(0, END)
@@ -311,27 +329,39 @@ class FrameGUI(Frame):
         self.add_names_to_listbox(usertext, self.application.hdb_nodes, self.end_point_list)
 
     def add_names_to_listbox(self, name, target_list, target_listbox):
+        """ Iterates through a target list for nodes that have a name containing a specified string
+            Populates the target listbox with nodes that match
+
+        Parameters:
+        name:               The string to search for in the nodes
+        target_list:        The target list to look through
+        target_listbox:     The target listbox to populate
+        """
         name = name.lower()
         for i in range(len(target_list)):
             if name in target_list[i].node_name.lower():
                 target_listbox.insert(END, target_list[i].node_name)
 
     def add_nodes_to_listbox(self, target_list, target_listbox):
+        """ Iterates through a target list and adds all of them into a target listbox
+
+        Parameters:
+        target_list:        The target list to look through
+        target_listbox:     The target listbox to populate
+        """
         for i in range(len(target_list)):
             target_listbox.insert(END, target_list[i].node_name)
 
-    #gets the selected text in the listbox and searches through the all_nodes array for node with
-    #the same node name
     def search_and_set_start_node(self, event):
+        """ Gets the selected text in the start listbox and searches through the all_nodes array
+            for node with the same node name
+        """
         index = self.start_point_list.curselection()
         seltext = self.start_point_list.get(index)
         if (len(seltext) < 0 or seltext[0] == "-"):
             return
 
-        #TEMPORARY FOR TESTING
-        print("start find: " + seltext)
-
-        #bin search through the all_nodes array to find the node corr. to listbox selection name
+        #Binary search through the all_nodes array to find the node corr. to listbox selection name
         nodestart = self.application.bin_search_all_nodes(seltext)
 
         # append the selection text to textbox
@@ -343,13 +373,13 @@ class FrameGUI(Frame):
         self.start_point_entry.config({"background": FrameGUI.ENTRY_VALID_COL})
 
     def search_and_set_end_node(self, event):
+        """ Gets the selected text in the end listbox and searches through the all_nodes array
+            for node with the same node name
+        """
         index = self.end_point_list.curselection()
         seltext = self.end_point_list.get(index)
         if (len(seltext) < 0 or seltext[0] == "-"):
             return
-
-        #TEMPORARY FOR TESTING
-        print("end find: " + seltext)
 
         #bin search through the all_nodes array to find the node corr. to listbox selection name
         nodeend = self.application.bin_search_all_nodes(seltext)
@@ -363,6 +393,10 @@ class FrameGUI(Frame):
         self.end_point_entry.config({"background": FrameGUI.ENTRY_VALID_COL})
 
     def save_path_info(self):
+        """ Callback function for when the user clicks the save path button
+            Displays a file dialog for the user to select a save path
+            Checks that the selected save path is valid
+        """
         file_path = filedialog.asksaveasfilename(initialdir = "/", title = "Save as", defaultextension=".txt", filetypes = (("Path info files","*.txt"),("all files","*.*")))
         if(len(file_path) < 1):
             messagebox.showerror("Invalid file path", "File not saved")
@@ -371,6 +405,10 @@ class FrameGUI(Frame):
 
 
     def load_path_info(self):
+        """ Callback function for when the user clicks the load path button
+            Displays a file dialog for the user to select a file to load
+            Checks that the selected file is valid
+        """
         file_path = filedialog.askopenfilename(initialdir = "/", title = "Select file", filetypes = (("Path info files","*.txt"),("all files","*.*")))
         if(len(file_path) < 1):
             messagebox.showerror("Invalid file path", "File not loaded")
@@ -378,6 +416,8 @@ class FrameGUI(Frame):
             self.application.load_path_info(file_path)
 
     def clear_path_info(self):
+        """ Clears the path info GUI
+        """
         self.map_canvas.clear_path()
         self.path_info_start["text"] = "Start point: "
         self.path_info_end["text"] = "End_point: "
@@ -389,6 +429,11 @@ class FrameGUI(Frame):
         self.path_info_calories["text"] = "Calories burnt: "
 
     def display_path_info(self, path):
+        """ Displays the path info of a specified path onto the GUI
+
+        Parameters:
+        path:               The target list of nodes which form a path
+        """
         total_dist, walking_dist, bus_dist, lrt_dist = app.Application.find_path_distance(path)
         self.path_info_start["text"] = "Start point: " + path[0].node_name
         self.path_info_end["text"] = "End point: " + path[-1].node_name

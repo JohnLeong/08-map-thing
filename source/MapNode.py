@@ -7,10 +7,12 @@ class MapNode():
         self.node_type = node_type                      #The type of node this is : hdb, busstop, mrt, lrt
         self.position = Coords(lattitude, longitude)    #The position of this node on the map
         self.connections = []                           #A list of directed edges containing the next node and weight. Eg.(node156, 30)
-        self.map_icon = None
+        self.map_icon = None                            #The ID of this nodes tkinter canvas icon
         self.reset_pathfinding_data()
 
     def reset_pathfinding_data(self):
+        """ Resets the variables used in astar pathfinding
+        """
         self.g = 0      #Distance from start
         self.h = 0      #Distance to end
         self.parent = None

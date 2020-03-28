@@ -4,6 +4,15 @@ from LLRBT import *
 class Pathfinding():
     @staticmethod
     def find_path_astar(start_node, end_node, ignore_buses=False):
+        """ Calculates the shortest path from a start node to end node
+            using Astar pathfinding
+            Returns a list of MapNodes which form a path from the start to end node
+
+        Parameters:
+        start_node:     The starting MapNode
+        end_node:       The destination MapNode
+        ignore_buses:   Whether to include bus paths in the pathfinding
+        """
         open_dict = {}
         closed_dict = {}
 
@@ -64,7 +73,14 @@ class Pathfinding():
         return []
 
     @staticmethod
-    def dijkstra(graph, start, goal):   # dijkstra algorithm to set graph, start & goal
+    def dijkstra(graph, start, goal):
+        """ Calculates the shortest path from a start node to end node
+            using djikstra's algorithm
+
+        Parameters:
+        start:          The starting node
+        goal:           The destination node
+        """
         shortest_distance = {}
         predecessor = {}
         unseenNodes = graph

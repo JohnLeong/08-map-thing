@@ -36,7 +36,9 @@ class Application():
         self.gui.mainloop()
 
     def load_map_data(self):
-        # import hdb
+        """ Loads all the map data from their respective files
+        """
+        # Import hdb data
         with open(Application.HDB_FILE_PATH) as csvfile:
             read_csv = csv.reader(csvfile, delimiter=',')
 
@@ -47,13 +49,7 @@ class Application():
                 self.all_nodes_dict[new_node.node_id] = new_node
                 print(new_node.node_id, new_node.node_name, new_node.position.lattitude, new_node.position.longitude, "loaded")
 
-        # file_name = "D:/SIT/ICT1008/1008 Project/source/map/new_hdb_test.csv"
-        # f = open(file_name, "w+")
-        # for i in range(0, len(self.hdb_nodes)):
-        #     f.write("\"" + self.hdb_nodes[i].node_id + "\",\"" + self.hdb_nodes[i].node_name + "\",\"" + str(self.hdb_nodes[i].position.lattitude) + "\",\"" + str(self.hdb_nodes[i].position.longitude) + "\"\n")
-        # f.close()
-
-        # import bus_stop
+        # Import bus stop data
         with open(Application.BUS_STOP_FILE_PATH) as jsonfile:
             data = json.load(jsonfile)
 
@@ -65,7 +61,7 @@ class Application():
                 self.all_nodes_dict[new_node.node_id] = new_node
                 print(new_node.node_id, new_node.node_name, new_node.position.lattitude, new_node.position.longitude, "loaded")
 
-        # import lrt
+        # Import lrt
         lrt = geopandas.read_file(Application.LRT_FILE_PATH)
         for i in range(0, len(lrt)):
             new_node = MapNode(lrt.id[i].split("/")[1], lrt.name[i], "lrt", lrt.geometry.y[i], lrt.geometry.x[i])
@@ -74,16 +70,16 @@ class Application():
             self.all_nodes_dict[new_node.node_id] = new_node
             print(new_node.node_id, new_node.node_name, new_node.position.lattitude, new_node.position.longitude, "loaded")
 
-        #for sorting the all_nodes array that will be used for BINARY SEARCH
+        #Sort the all_nodes list to be be used for BINARY SEARCH
         self.all_nodes.sort(key=lambda x: x.node_name)
 
+        #Create all node edges
         self.create_edge_connections()
 
-        #TEMPORARY ONLY(prints all node names in all_nodes array
-        # for i in self.all_nodes:
-        #     print("This is node name: " + i.node_name)
-
     def create_edge_connections(self):
+        """ Creates the directed edges for all nodes
+            Bus service routes are also loaded in and treated as directed edges
+        """
         #Create bus service connections
         with open(Application.BUS_SERVICES_FILE_PATH) as jsonfile:
             data = json.load(jsonfile)
@@ -103,8 +99,8 @@ class Application():
                         else:
                             weight = self.all_nodes_dict[service[i][j]].position.real_distance_from(self.all_nodes_dict[service[i][j + 1]].position)
                             self.all_nodes_dict[service[i][j]].connections.append((self.all_nodes_dict[service[i][j + 1]], weight * 0.4, service_num))
-                            #print("Connection from", self.all_nodes_dict[service[i][j]].node_id, "to", self.all_nodes_dict[service[i][j + 1]].node_id)
 
+        #Go through all nodes annd create directed edges to each other if they are within the threshold distance
         for node in self.all_nodes:
             for other in self.all_nodes:
                 if(node.node_id == other.node_id):
@@ -112,35 +108,46 @@ class Application():
                 dist = node.position.distance_from_sqr(other.position)
                 if(dist > Application.SHELTER_DIST_THRESHOLD):
                     pass
-                    #node.connections.append((other, dist * 1000.0))
                 else:
                     node.connections.append((other, dist * Application.SHELTER_DIST_MODIFIER))
 
 
     def find_path(self, preferred):
-        print(preferred)
+        """ Checks for valid start/end nodes annd displays error messages if invalid
+            Runs the pathfinding algorithm if everything is valid
+
+            Parameters:
+            preferred:     The preferred pathfinding type
+        """
+        #Check for a valid start node
         if (self.selected_start_node == None):
             messagebox.showerror("Error finding path", "Please select a valid start point!")
             return
+        #Check for a valid end node
         if (self.selected_end_node == None):
             messagebox.showerror("Error finding path", "Please select a valid end point!")
             return
+        #Check that start and end nodes are different
         if (self.selected_start_node == self.selected_end_node):
             messagebox.showerror("Error finding path", "Start and end point must be different!")
             return
 
+        #Begin pathfinding algorithm
         print("Finding path from '" + str(self.selected_start_node.node_name) + "' to '" + str(self.selected_end_node.node_name) + "'");
         self.path = Pathfinding.find_path_astar(self.selected_start_node, self.selected_end_node, ignore_buses=False if preferred != "Cheapest" else True)
         print("Astart path of length " + str(len(self.path)) + " found")
 
-        # for p in self.path:
-        #     print(p.node_name, p.node_id)
+        #Update path info if a path was found
         if (len(self.path) > 0):
             self.gui.display_path_info(self.path)
             self.gui.map_canvas.display_path(self.path)
 
-    #binary search algorithm
     def bin_search_all_nodes(self, selectedtext):
+        """ Uses binary search to look through the all_nodes list for a node with a matching name
+
+        Parameters:
+        selectedtext:     The name of the node to look for
+        """
         start = 0
         end = (len(self.all_nodes))-1
         while start <= end:
@@ -159,10 +166,17 @@ class Application():
                 return n
 
     def clear_path_info(self):
+        """ Clears the stored previous path info and the MapCanvas path drawing
+        """
         self.path.clear()
         self.gui.clear_path_info()
 
     def save_path_info(self, file_path):
+        """ Saves the current displayed path to a text file
+
+        Parameters:
+        file_path:      The location to export the path info to
+        """
         if (len(self.path) < 1):
             messagebox.showerror("Invalid path info", "No path to save")
             return
@@ -173,6 +187,11 @@ class Application():
         print("File saved to: " + file_path)
 
     def load_path_info(self, file_path):
+        """ Loads a file containing a path info and displays it onto the GUI
+
+        Parameters:
+        file_path:      The location of the file to import
+        """
         f = open(file_path, 'r')
         lines = f.readlines()
         for line in lines:
@@ -188,11 +207,21 @@ class Application():
 
     @staticmethod
     def calculate_calories_burnt(meters):
+        """ Estimates the number of calories that would be burnt from walking a specified distance
+
+        Parameters:
+        meters:         The walking distance in meters
+        """
         CALORIES_PER_METER = 0.062150403977625
         return int(meters * CALORIES_PER_METER)
 
     @staticmethod
     def find_path_distance(path):
+        """ Calculates the total walking/lrt/mrt/bus distance travelled in a speecified path
+
+        Parameters:
+        path:           A list of nodes which form a path
+        """
         total_dist = walking_dist = bus_dist = lrt_dist = 0
 
         for i in range(len(path) - 1):
