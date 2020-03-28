@@ -247,3 +247,67 @@ class Application():
                 walking_dist += dist_to_next
 
         return total_dist, walking_dist, bus_dist, lrt_dist
+
+    @staticmethod
+    def lrtCostCalculation(lrtdist):
+        distLrtCost=[0, 0.92,1.02]
+        if (lrtdist != 0 ):
+                if (lrtdist <= 3.2):
+                    return distLrtCost[1]
+                elif(lrtdist >3.2 and lrtdist<4.3):
+                    return distLrtCost[2]
+        else:
+            return distLrtCost[0]
+
+    @staticmethod
+    def busCostCalculation(busdist):
+        distBusCost = [0,0.92, 1.02, 1.12, 1.22, 1.31, 1.38, 1.44, 1.48, 1.52, 1.56, 1.60, 1.64, 1.72, 1.76, 1.80, 1.84, 1.87, 1.90, 1.93, 1.96, 1.98, 2.00]
+        if (busdist != 0):
+                if (busdist <= 3.2):
+                    return distBusCost[1]
+                elif (busdist > 3.2 and busdist < 4.3):
+                    return distBusCost[2]
+                elif (busdist > 4.2 and busdist < 5.3):
+                    return distBusCost[3]
+                elif (busdist > 5.2 and busdist < 6.3):
+                    return distBusCost[4]
+                elif (busdist > 6.2 and busdist < 7.3):
+                    return distBusCost[5]
+                elif (busdist > 7.2 and busdist < 8.3):
+                    return distBusCost[6]
+                elif (busdist > 8.2 and busdist < 9.3):
+                    return distBusCost[7]
+                elif (busdist > 9.2 and busdist < 10.3):
+                    return distBusCost[8]
+                elif (busdist > 10.2 and busdist < 11.3):
+                    return distBusCost[9]
+                elif (busdist > 11.2 and busdist < 12.3):
+                    return distBusCost[10]
+                elif (busdist > 12.2 and busdist < 13.3):
+                    return distBusCost[11]
+                elif (busdist > 13.2 and busdist < 14.3):
+                    return distBusCost[12]
+                elif (busdist > 14.2 and busdist < 15.3):
+                    return distBusCost[13]
+                elif (busdist > 15.2 and busdist < 16.3):
+                    return distBusCost[14]
+                elif (busdist > 16.2 and busdist < 17.3):
+                    return distBusCost[15]
+                elif (busdist > 17.2 and busdist < 18.3):
+                    return distBusCost[16]
+                elif (busdist > 18.2 and busdist < 19.3):
+                    return distBusCost[17]
+                elif (busdist > 19.2 and busdist < 20.3):
+                    return distBusCost[18]
+                elif (busdist > 20.2 and busdist < 21.3):
+                    return distBusCost[19]
+                elif (busdist > 21.2 and busdist < 22.3):
+                    return distBusCost[20]
+                elif (busdist > 22.2 and busdist < 23.3):
+                    return distBusCost[21]
+                elif (busdist > 23.2 and busdist < 24.3):
+                    return distBusCost[22]
+                elif (busdist > 24.2 and busdist < 25.3):
+                    return distBusCost[23]
+        else:
+            return distBusCost[0]
