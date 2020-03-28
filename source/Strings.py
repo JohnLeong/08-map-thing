@@ -1,0 +1,7 @@
+STR_PROJECT_INFO = "This application helps users find a path from a start to end point in the Punggol area.\nThe preferred path can be specified, giving the users an option of Sheltered/Fastest or Cheapest path.\nThe information of each path can be exported to an external file for quick importing later on."
+STR_MEMBER_01 = "1902605\tLeong Jhun Shing John"
+STR_MEMBER_02 = "1902636\tMah Jia Qi"
+STR_MEMBER_03 = "1902615\tLim Chong Jing"
+STR_MEMBER_04 = "1902147\tZulfadli Bin Johari"
+STR_MEMBER_05 = "1902654\tKang Chang long"
+STR_MEMBER_06 = "1902687\tWang Li Qi"

@@ -187,6 +187,11 @@ class Application():
         self.gui.map_canvas.display_path(self.path)
 
     @staticmethod
+    def calculate_calories_burnt(meters):
+        CALORIES_PER_METER = 0.062150403977625
+        return int(meters * CALORIES_PER_METER)
+
+    @staticmethod
     def find_path_distance(path):
         total_dist = walking_dist = bus_dist = lrt_dist = 0
 

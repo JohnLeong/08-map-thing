@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import filedialog
 from MapCanvas import *
 import Application as app
+import Strings
 
 class FrameGUI(Frame):
     WINDOW_TITLE = "1008 Project"
@@ -210,6 +211,26 @@ class FrameGUI(Frame):
         self.credits_tab.grid(row = 0, column = 0, sticky = "w")
         self.tab_control.add(self.credits_tab, text = "Credits")
 
+        self.credits_info_frame = LabelFrame(self.credits_tab, text="Project Info", font = ('Calibri', 9, 'bold'))
+        self.credits_info_frame.grid(row = 0, column = 0, sticky = "w", padx = 10)
+        self.credits_info_label = Label(self.credits_info_frame, text=Strings.STR_PROJECT_INFO, font = ('Calibri', 9), justify=LEFT)
+        self.credits_info_label.grid(row = 0, column = 0, sticky = "w", padx = 10)
+
+        self.credits_member_frame = LabelFrame(self.credits_tab, text="Team members", font = ('Calibri', 9, 'bold'))
+        self.credits_member_frame.grid(row = 1, column = 0, sticky = "w", padx = 10)
+        self.credits_member_label_1 = Label(self.credits_member_frame, text=Strings.STR_MEMBER_01)
+        self.credits_member_label_1.grid(row = 0, column = 0, sticky = "w")
+        self.credits_member_label_2 = Label(self.credits_member_frame, text=Strings.STR_MEMBER_02)
+        self.credits_member_label_2.grid(row = 1, column = 0, sticky = "w")
+        self.credits_member_label_3 = Label(self.credits_member_frame, text=Strings.STR_MEMBER_03)
+        self.credits_member_label_3.grid(row = 2, column = 0, sticky = "w")
+        self.credits_member_label_4 = Label(self.credits_member_frame, text=Strings.STR_MEMBER_04)
+        self.credits_member_label_4.grid(row = 3, column = 0, sticky = "w")
+        self.credits_member_label_5 = Label(self.credits_member_frame, text=Strings.STR_MEMBER_05)
+        self.credits_member_label_5.grid(row = 4, column = 0, sticky = "w")
+        self.credits_member_label_6 = Label(self.credits_member_frame, text=Strings.STR_MEMBER_06)
+        self.credits_member_label_6.grid(row = 5, column = 0, sticky = "w")
+        "----------------------------------------------------------------------------------------------------------"
         #callbacks for when user manually inputs values to the start and and point entries
         self.start_point_entry_text.trace("w", lambda *_, sv=self.start_point_entry_text: self.callback_start(sv))
         self.end_point_entry_text.trace("w", lambda *_, sv=self.end_point_entry_text: self.callback_end(sv))
@@ -380,4 +401,4 @@ class FrameGUI(Frame):
         ## TODO: Calculate travel costs based on distance
         # TODO: Calculate calories burnt from walking
         self.path_info_travel_cost["text"] = "Travel costs: "
-        self.path_info_calories["text"] = "Calories burnt: "
+        self.path_info_calories["text"] = "Calories burnt: " + str(app.Application.calculate_calories_burnt(walking_dist * 1000))
