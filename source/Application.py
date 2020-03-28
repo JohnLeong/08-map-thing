@@ -273,6 +273,11 @@ class Application():
 
     @staticmethod
     def lrtCostCalculation(lrtdist):
+        """ Calculates the cost of taking the LRT over a specified distance
+
+        Parameters:
+        lrtdist:          The distance travelled by LRT in km
+        """
         distLrtCost=[0, 0.92,1.02]
         if (lrtdist != 0 ):
                 if (lrtdist <= 3.2):
@@ -284,6 +289,11 @@ class Application():
 
     @staticmethod
     def busCostCalculation(busdist):
+        """ Calculates the cost of taking the bus over a specified distance
+
+        Parameters:
+        busdist:          The distance travelled by bus in km
+        """
         distBusCost = [0,0.92, 1.02, 1.12, 1.22, 1.31, 1.38, 1.44, 1.48, 1.52, 1.56, 1.60, 1.64, 1.72, 1.76, 1.80, 1.84, 1.87, 1.90, 1.93, 1.96, 1.98, 2.00]
         if (busdist != 0):
                 if (busdist <= 3.2):

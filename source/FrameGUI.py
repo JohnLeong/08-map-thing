@@ -443,7 +443,5 @@ class FrameGUI(Frame):
         self.path_info_bus_dist["text"] = "Bus distance: " + str(round(bus_dist, 3)) + "km"
         self.path_info_mrt_dist["text"] = "MRT/LRT distance: " + str(round(lrt_dist, 3)) + "km"
 
-        ## TODO: Calculate travel costs based on distance
-        # TODO: Calculate calories burnt from walking
         self.path_info_travel_cost["text"] = "Travel costs: $" + (str(app.Application.busCostCalculation(bus_dist)) + str(app.Application.lrtCostCalculation(lrt_dist)))
         self.path_info_calories["text"] = "Calories burnt: " + str(app.Application.calculate_calories_burnt(walking_dist * 1000))
