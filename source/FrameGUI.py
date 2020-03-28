@@ -445,5 +445,5 @@ class FrameGUI(Frame):
 
         ## TODO: Calculate travel costs based on distance
         # TODO: Calculate calories burnt from walking
-        self.path_info_travel_cost["text"] = "Travel costs: "
+        self.path_info_travel_cost["text"] = "Travel costs: $" + (str(app.Application.busCostCalculation(bus_dist)) + str(app.Application.lrtCostCalculation(lrt_dist)))
         self.path_info_calories["text"] = "Calories burnt: " + str(app.Application.calculate_calories_burnt(walking_dist * 1000))
