@@ -15,6 +15,7 @@ class Application():
     BUS_STOP_FILE_PATH = "map/BusStop.geojson"
     BUS_SERVICES_FILE_PATH = "map/BusServiceRoute.json"
     LRT_FILE_PATH = "map/new_lrt.geojson"
+    LRT_SERVICES_FILE_PATH  = "map/LRTServiceRoute.json"
     SHELTER_DIST_THRESHOLD = 0.0000058
     SHELTER_DIST_MODIFIER = 500000.2
 
@@ -98,7 +99,27 @@ class Application():
                             break
                         else:
                             weight = self.all_nodes_dict[service[i][j]].position.real_distance_from(self.all_nodes_dict[service[i][j + 1]].position)
-                            self.all_nodes_dict[service[i][j]].connections.append((self.all_nodes_dict[service[i][j + 1]], weight * 0.4, service_num))
+                            self.all_nodes_dict[service[i][j]].connections.append((self.all_nodes_dict[service[i][j + 1]], weight * 0.4, "Bus " + service_num))
+
+        #Create LRT service connections
+        with open(Application.LRT_SERVICES_FILE_PATH) as jsonfile:
+            data = json.load(jsonfile)
+
+            #Loop through all bus services
+            for service_num, service in data.items():
+                #Loop through all routes in each servic
+                for i in range(1, len(service)):
+                    #Don't add route if there is only 1 stop
+                    if (len(service[i]) < 2):
+                        continue
+                    #Created directed edges for each bus stop in the route
+                    for j in range(len(service[i]) - 1):
+                        if (service[i][j] not in self.all_nodes_dict):
+                            print("LRT " + service[i][j] + " not found")
+                            break
+                        else:
+                            weight = self.all_nodes_dict[service[i][j]].position.real_distance_from(self.all_nodes_dict[service[i][j + 1]].position)
+                            self.all_nodes_dict[service[i][j]].connections.append((self.all_nodes_dict[service[i][j + 1]], weight * 0.4, "LRT " + service_num))
 
         #Go through all nodes annd create directed edges to each other if they are within the threshold distance
         for node in self.all_nodes:
@@ -241,6 +262,8 @@ class Application():
                         walking_dist += dist_to_next
                 elif(path[i].node_type == "hdb"):
                     walking_dist += dist_to_next
+                elif(path[i].node_type == "lrt"):
+                    lrt_dist += dist_to_next
                 else:
                     print("Unknown node combination:", path[i].node_type, path[i + 1].node_type)
             else:

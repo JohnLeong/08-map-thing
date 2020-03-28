@@ -15,7 +15,7 @@ class MapCanvas(Canvas):
     NODE_COL_HDB = "#30de2a"
     PATH_WIDTH = 1
     BUS_PATH_COL = "purple"
-    LRT_PATH_COL = "blue"
+    LRT_PATH_COL = "#00ffff"
     MRT_PATH_COL = "orange"
     WALK_PATH_COL = "green"
 
@@ -197,11 +197,21 @@ class MapCanvas(Canvas):
                                 break
                     if (bus_service != -1):
                         self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill=MapCanvas.BUS_PATH_COL, width=MapCanvas.PATH_WIDTH))
-                        line_text += "\nBus " + bus_service
+                        line_text += "\n" + bus_service
                     else:
                         self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill=MapCanvas.WALK_PATH_COL, width=MapCanvas.PATH_WIDTH))
                 elif(path[i].node_type == "lrt"):
-                    self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill=MapCanvas.LRT_PATH_COL, width=MapCanvas.PATH_WIDTH))
+                    lrt_service = -1
+                    for c in path[i].connections:
+                        if (c[0].node_id == path[i + 1].node_id):
+                            if (len(c) > 2):
+                                lrt_service = c[2]
+                                break
+                    if (lrt_service != -1):
+                        self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill=MapCanvas.LRT_PATH_COL, width=MapCanvas.PATH_WIDTH))
+                        line_text += "\n" + lrt_service
+                    else:
+                        self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill=MapCanvas.LRT_PATH_COL, width=MapCanvas.PATH_WIDTH))
                 elif(path[i].node_type == "mrt"):
                     self.path_lines.append(super().create_line(start_x, start_y, end_x, end_y, fill=MapCanvas.MRT_PATH_COL, width=MapCanvas.PATH_WIDTH))
                 elif(path[i].node_type == "hdb"):
