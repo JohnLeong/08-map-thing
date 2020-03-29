@@ -16,3 +16,6 @@ class MapNode():
         self.g = 0      #Distance from start
         self.h = 0      #Distance to end
         self.parent = None
+
+    def __lt__(self, other):
+        return (self.g + self.h < other.g + other.h) and self.h < other.h
