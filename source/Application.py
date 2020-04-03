@@ -9,6 +9,7 @@ from Pathfinding import *
 import math as math
 import csv
 import json
+import time
 
 class Application():
     HDB_FILE_PATH = "map/new_hdb.csv"
@@ -33,7 +34,9 @@ class Application():
         self.load_map_data()
 
         # Initialise GUI
-        self.gui = FrameGUI(Tk(), self)
+        self.root = Tk()
+        self.root.resizable(False, False)
+        self.gui = FrameGUI(self.root, self)
         self.gui.mainloop()
 
     def load_map_data(self):
@@ -133,7 +136,7 @@ class Application():
                     node.connections.append((other, dist * Application.SHELTER_DIST_MODIFIER))
 
 
-    def find_path(self, preferred):
+    def find_path(self, preferred, algorithm):
         """ Checks for valid start/end nodes annd displays error messages if invalid
             Runs the pathfinding algorithm if everything is valid
 
@@ -155,12 +158,16 @@ class Application():
 
         #Begin pathfinding algorithm
         print("Finding path from '" + str(self.selected_start_node.node_name) + "' to '" + str(self.selected_end_node.node_name) + "'");
-        self.path = Pathfinding.find_path_astar(self.selected_start_node, self.selected_end_node, ignore_buses=False if preferred != "Cheapest" else True)
+        start_time = time.time()
+        if (algorithm == "AStar"):
+            self.path = Pathfinding.find_path_astar(self.selected_start_node, self.selected_end_node, walk_only=False if preferred != "Cheapest" else True)
+        else:
+            self.path = Pathfinding.find_path_djikstra(self.selected_start_node, self.selected_end_node, walk_only=False if preferred != "Cheapest" else True)
         print("Astart path of length " + str(len(self.path)) + " found")
-
+        end_time = time.time()
         #Update path info if a path was found
         if (len(self.path) > 0):
-            self.gui.display_path_info(self.path)
+            self.gui.display_path_info(self.path, end_time - start_time)
             self.gui.map_canvas.display_path(self.path)
 
     def bin_search_all_nodes(self, selectedtext):

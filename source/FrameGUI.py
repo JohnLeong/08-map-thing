@@ -118,8 +118,18 @@ class FrameGUI(Frame):
         self.path_type_string.set(self.path_type_options[0])
         self.path_type_selection = OptionMenu(self.map_control_frame, self.path_type_string, *self.path_type_options)
         self.path_type_selection.grid(row = 8, column = 0, sticky="we", padx = 10)
-        self.find_path_button = Button(self.map_control_frame, text = "Find path", command = lambda: self.application.find_path(self.path_type_string.get()))
-        self.find_path_button.grid(row = 9, column = 0, sticky="we", padx = 10, pady = 10)
+
+        self.algo_type_label = Label(self.map_control_frame, text="Algorithm", font = ('Calibri', 9))
+        self.algo_type_label.grid(row = 9, column = 0, sticky="w", padx = 10)
+        self.algo_type_options = ["AStar", "Djikstra"]
+        self.algo_type_string = StringVar()
+        self.algo_type_string.set(self.algo_type_options[0])
+        self.algo_type_selection = OptionMenu(self.map_control_frame, self.algo_type_string, *self.algo_type_options)
+        self.algo_type_selection.grid(row = 10, column = 0, sticky="we", padx = 10)
+
+
+        self.find_path_button = Button(self.map_control_frame, text = "Find path", command = lambda: self.application.find_path(self.path_type_string.get(), self.algo_type_string.get()))
+        self.find_path_button.grid(row = 11, column = 0, sticky="we", padx = 10, pady = 10)
 
         "----------------------------------------------------------------------------------------------------------"
         #Node info
@@ -166,9 +176,11 @@ class FrameGUI(Frame):
         self.path_info_travel_cost.grid(row = 6, column = 0, sticky = "w", padx = 10)
         self.path_info_calories = Label(self.path_info_frame, text = "Calories burnt: ", font = ('Calibri', 9))
         self.path_info_calories.grid(row = 7, column = 0, sticky = "w", padx = 10)
+        self.path_info_time = Label(self.path_info_frame, text = "Time taken to calculate path: ", font = ('Calibri', 9))
+        self.path_info_time.grid(row = 8, column = 0, sticky = "w", padx = 10)
 
         self.path_info_button_frame = Frame(self.path_info_frame)
-        self.path_info_button_frame.grid(row = 8, column = 0, sticky="we", padx = 5)
+        self.path_info_button_frame.grid(row = 9, column = 0, sticky="we", padx = 5)
         self.path_info_clear_button = Button(self.path_info_button_frame, text = "Clear path", command=self.application.clear_path_info)
         self.path_info_clear_button.grid(row = 0, column = 0, sticky="we", padx = 5)
         self.path_info_save_button = Button(self.path_info_button_frame, text = "Save path info", command=self.save_path_info)
@@ -427,8 +439,9 @@ class FrameGUI(Frame):
         self.path_info_mrt_dist["text"] = "MRT/LRT distance: "
         self.path_info_travel_cost["text"] = "Travel costs: "
         self.path_info_calories["text"] = "Calories burnt: "
+        self.path_info_time["text"] = "Time taken to calculate path: "
 
-    def display_path_info(self, path):
+    def display_path_info(self, path, time_taken = None):
         """ Displays the path info of a specified path onto the GUI
 
         Parameters:
@@ -443,5 +456,10 @@ class FrameGUI(Frame):
         self.path_info_bus_dist["text"] = "Bus distance: " + str(round(bus_dist, 3)) + "km"
         self.path_info_mrt_dist["text"] = "MRT/LRT distance: " + str(round(lrt_dist, 3)) + "km"
 
-        self.path_info_travel_cost["text"] = "Travel costs: $" + (str(app.Application.busCostCalculation(bus_dist)) + str(app.Application.lrtCostCalculation(lrt_dist)))
+        cost = round(app.Application.busCostCalculation(bus_dist) + app.Application.lrtCostCalculation(lrt_dist), 2)
+        self.path_info_travel_cost["text"] = "Travel costs: $" + (str(cost))
         self.path_info_calories["text"] = "Calories burnt: " + str(app.Application.calculate_calories_burnt(walking_dist * 1000))
+        if (time_taken == None):
+            self.path_info_time["text"] = "Time taken to calculate path: "
+        else:
+            self.path_info_time["text"] = "Time taken to calculate path: " + str(round(time_taken, 10))

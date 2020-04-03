@@ -13,7 +13,7 @@ class MapCanvas(Canvas):
     NODE_COL_MRT = "#fcba03"
     NODE_COL_BUS = "#ba03fc"
     NODE_COL_HDB = "#30de2a"
-    PATH_WIDTH = 1
+    PATH_WIDTH = 2
     BUS_PATH_COL = "purple"
     LRT_PATH_COL = "#00ffff"
     MRT_PATH_COL = "orange"

@@ -4,7 +4,7 @@ import heapq
 
 class Pathfinding():
     @staticmethod
-    def find_path_astar(start_node, end_node, ignore_buses=False):
+    def find_path_astar(start_node, end_node, walk_only=False):
         """ Calculates the shortest path from a start node to end node
             using Astar pathfinding
             Returns a list of MapNodes which form a path from the start to end node
@@ -12,7 +12,7 @@ class Pathfinding():
         Parameters:
         start_node:     The starting MapNode
         end_node:       The destination MapNode
-        ignore_buses:   Whether to include bus paths in the pathfinding
+        walk_only:   Whether to include bus paths in the pathfinding
         """
         open_dict = {}
         closed_dict = {}
@@ -57,8 +57,8 @@ class Pathfinding():
                 #Skip if node is already in the closed set
                 if (neighbor.node_id in closed_dict):
                     continue
-                #Skip if ignore_buses is true and this directed edge is a bus service
-                if (ignore_buses and len(directed_edge) > 2):
+                #Skip if walk_only is true and this directed edge is a bus service
+                if (walk_only and len(directed_edge) > 2):
                     continue
 
                 #Get the total combined path cost from start to neighbor
@@ -74,7 +74,7 @@ class Pathfinding():
         return []
 
     @staticmethod
-    def find_path_astar_heap(start_node, end_node, ignore_buses=False):
+    def find_path_astar_heap(start_node, end_node, walk_only=False):
         """ Calculates the shortest path from a start node to end node
             using Astar pathfinding
             Returns a list of MapNodes which form a path from the start to end node
@@ -83,7 +83,7 @@ class Pathfinding():
         Parameters:
         start_node:     The starting MapNode
         end_node:       The destination MapNode
-        ignore_buses:   Whether to include bus paths in the pathfinding
+        walk_only:   Whether to include bus paths in the pathfinding
         """
         open_heap = []
         closed_dict = {}
@@ -120,8 +120,8 @@ class Pathfinding():
                 #Skip if node is already in the closed set
                 if (neighbor.node_id in closed_dict):
                     continue
-                #Skip if ignore_buses is true and this directed edge is a bus service
-                if (ignore_buses and len(directed_edge) > 2):
+                #Skip if walk_only is true and this directed edge is a bus service
+                if (walk_only and len(directed_edge) > 2):
                     continue
 
                 #Get the total combined path cost from start to neighbor
@@ -137,7 +137,75 @@ class Pathfinding():
         return []
 
     @staticmethod
-    def dijkstra(graph, start, goal):
+    def find_path_djikstra(start_node, end_node, walk_only=False):
+        """ Calculates the shortest path from a start node to end node
+            using djikstra's algorithm
+            Returns a list of MapNodes which form a path from the start to end node
+
+        Parameters:
+        start_node:     The starting MapNode
+        end_node:       The destination MapNode
+        walk_only:   Whether to include bus paths in the pathfinding
+        """
+        open_dict = {}
+        closed_dict = {}
+
+        #Clear previous pathfinding data
+        start_node.reset_pathfinding_data()
+        end_node.reset_pathfinding_data()
+
+        #Add start node to open set
+        open_dict[start_node.node_id] = start_node
+
+        while (len(open_dict) > 0):
+            #Get item with lowest f score
+            lowest = False
+            for item in open_dict.values():
+                if (lowest == False):
+                    lowest = item
+                elif (item.g < lowest.g):
+                    lowest = item
+            current_node = lowest
+            open_dict.pop(lowest.node_id)
+
+            #Add item to closed set
+            closed_dict[current_node.node_id] = current_node
+
+            if (current_node == end_node):
+                path = []
+                cur = end_node
+                while(cur != start_node):
+                    path.append(cur)
+                    cur = cur.parent
+                path.append(start_node)
+                return path[::-1]
+
+            #Get all connections to current node
+            for i in range(len(current_node.connections)):
+                #Check if connection is in closed set
+                directed_edge = current_node.connections[i]
+                weight = directed_edge[1]
+                neighbor = directed_edge[0]
+                #Skip if node is already in the closed set
+                if (neighbor.node_id in closed_dict):
+                    continue
+                #Skip if walk_only is true and this directed edge is a bus service
+                if (walk_only and len(directed_edge) > 2):
+                    continue
+
+                #Get the total combined path cost from start to neighbor
+                new_cost_to_neighbor = current_node.g + weight
+                if (new_cost_to_neighbor < neighbor.g or neighbor.node_id not in open_dict):
+                    neighbor.g = new_cost_to_neighbor
+                    neighbor.parent = current_node
+
+                    if (neighbor.node_id not in open_dict):
+                        open_dict[neighbor.node_id] = neighbor
+
+        return []
+
+    @staticmethod
+    def dijkstra_old(graph, start, goal):
         """ Calculates the shortest path from a start node to end node
             using djikstra's algorithm
 
